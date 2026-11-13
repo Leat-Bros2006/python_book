@@ -5,426 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python Programming Book</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Kantumruy+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
-
-        :root {
-            --primary: #0284C7;
-            --primary-dark: #0369A1;
-            --primary-light: #E0F2FE;
-            --dark: #0F172A;
-            --text: #1E293B;
-            --muted: #64748B;
-            --border: #E2E8F0;
-            --bg-page: #FFFFFF;
-            --bg-app: #CBD5E1;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Kantumruy Pro', sans-serif;
-            background-color: var(--bg-app);
-            color: var(--text);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .book-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 24px 0;
-            gap: 24px;
-        }
-
-        .page {
-            width: 210mm;
-            height: 297mm;
-            background: var(--bg-page);
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
-            padding: 13mm 16mm 11mm;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
-            page-break-after: always;
-            break-after: page;
-        }
-
-        /* ក្របមុខ និងទំព័រចុងក្រោយ */
-        .cover-page,
-        .thankyou-page {
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(155deg, #0F172A 0%, #0369A1 55%, #0284C7 100%);
-            color: #FFFFFF;
-        }
-
-        .thankyou-page {
-            justify-content: space-between;
-            padding-top: 28mm;
-        }
-
-        .cover-center-box {
-            max-width: 560px;
-            margin: auto 0;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 16px;
-            padding: 36px 32px;
-            backdrop-filter: blur(6px);
-        }
-
-        .cover-badge-pill {
-            display: inline-block;
-            background: rgba(56, 189, 248, 0.2);
-            color: #7DD3FC;
-            font-size: 0.78rem;
-            font-weight: 700;
-            padding: 6px 18px;
-            border-radius: 999px;
-            letter-spacing: 0.5px;
-            margin-bottom: 1.25rem;
-            border: 1px solid rgba(125, 211, 252, 0.45);
-        }
-
-        .cover-main-title {
-            font-size: 2.35rem;
-            font-weight: 800;
-            color: #FFFFFF;
-            line-height: 1.38;
-            margin-bottom: 0.75rem;
-        }
-
-        .cover-subtitle {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #BAE6FD;
-            margin-bottom: 1.5rem;
-        }
-
-        .cover-line {
-            width: 90px;
-            height: 4px;
-            background: linear-gradient(to right, #38BDF8, #4ADE80);
-            margin: 0 auto 1.75rem;
-            border-radius: 2px;
-        }
-
-        .cover-meta {
-            font-size: 0.92rem;
-            color: #E2E8F0;
-            line-height: 1.85;
-        }
-
-        .cover-meta strong {
-            color: #FFFFFF;
-        }
-
-        .cover-meta a {
-            color: #38BDF8;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .thankyou-page .page-foot {
-            border-top-color: rgba(255, 255, 255, 0.2);
-            color: #CBD5E1;
-        }
-
-        .thankyou-page .page-num {
-            color: #38BDF8;
-        }
-
-        .page-body {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .page-top-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.74rem;
-            font-weight: 600;
-            color: var(--muted);
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .page-top-header a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        /* តារាងមាតិកា (TOC) + transform: translate */
-        .toc-heading {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--dark);
-            margin-bottom: 8px;
-            padding-left: 10px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .toc-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5px;
-        }
-
-        .toc-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text);
-            padding: 3px 10px;
-            border-radius: 5px;
-            border-bottom: 1px dashed #E2E8F0;
-            font-size: 0.76rem;
-            transition: transform 0.22s ease, background-color 0.22s ease, color 0.22s ease;
-        }
-
-        .toc-row:hover {
-            background: #E0F2FE;
-            color: var(--primary-dark);
-            transform: translateX(6px);
-        }
-
-        .toc-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .toc-num {
-            font-weight: 700;
-            color: var(--primary);
-            min-width: 24px;
-        }
-
-        .toc-title {
-            font-weight: 500;
-        }
-
-        .toc-page {
-            font-size: 0.71rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            background: #F1F5F9;
-            padding: 1px 8px;
-            border-radius: 4px;
-        }
-
-        /* ផ្នែកក្បាលនៃចំណងជើងមេរៀន (ពណ៌ដិតជាងមុន) */
-        .ch-title {
-            font-size: 1.16rem;
-            font-weight: 800;
-            color: #0F172A;
-            background: linear-gradient(to right, #BAE6FD 0%, #E0F2FE 65%, rgba(224, 242, 254, 0.25) 100%);
-            padding: 7px 14px;
-            border-left: 5px solid #0369A1;
-            border-radius: 0 6px 6px 0;
-            margin-bottom: 10px;
-        }
-
-        .step-heading {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-top: 8px;
-            margin-bottom: 4px;
-        }
-
-        .step-text {
-            font-size: 0.8rem;
-            color: var(--text);
-            line-height: 1.75;
-            margin-bottom: 6px;
-        }
-
-        .step-list {
-            padding-left: 20px;
-            margin-bottom: 8px;
-            font-size: 0.79rem;
-            line-height: 1.72;
-        }
-
-        .step-list li {
-            margin-bottom: 5px;
-        }
-
-        code.ic {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.73rem;
-            background: #F1F5F9;
-            color: #0369A1;
-            padding: 1px 5px;
-            border-radius: 4px;
-            border: 1px solid #CBD5E1;
-        }
-
-        .code-box {
-            background: #0F172A;
-            color: #E2E8F0;
-            border-radius: 7px;
-            padding: 9px 13px;
-            margin: 4px 0 8px;
-            border: 1px solid #1E293B;
-        }
-
-        .code-box pre {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.73rem;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-
-        .t-tag {
-            color: #38BDF8;
-            font-weight: 600;
-        }
-
-        .t-attr {
-            color: #FBBF24;
-        }
-
-        .t-str {
-            color: #4ADE80;
-        }
-
-        .t-num {
-            color: #F472B6;
-        }
-
-        .t-com {
-            color: #94A3B8;
-            font-style: italic;
-        }
-
-        .t-sel {
-            color: #C084FC;
-            font-weight: 600;
-        }
-
-        .browser-window {
-            border: 1px solid #CBD5E1;
-            border-radius: 7px;
-            overflow: hidden;
-            margin: 4px 0 8px;
-        }
-
-        .browser-header {
-            background: #E2E8F0;
-            padding: 4px 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .browser-dots {
-            display: flex;
-            gap: 4px;
-        }
-
-        .browser-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .dot-red {
-            background: #EF4444;
-        }
-
-        .dot-yellow {
-            background: #F59E0B;
-        }
-
-        .dot-green {
-            background: #22C55E;
-        }
-
-        .browser-url-bar {
-            background: #FFFFFF;
-            color: #475569;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.68rem;
-            padding: 1px 8px;
-            border-radius: 4px;
-            flex: 1;
-        }
-
-        .browser-canvas {
-            padding: 8px 13px;
-            line-height: 1.65;
-        }
-
-        .summary-box {
-            margin-top: 8px;
-            background: #F0F9FF;
-            border: 1px solid #BAE6FD;
-            border-left: 4px solid var(--primary);
-            border-radius: 6px;
-            padding: 7px 12px;
-            font-size: 0.78rem;
-            color: var(--dark);
-            line-height: 1.68;
-        }
-
-        .page-foot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.73rem;
-            color: var(--muted);
-            padding-top: 6px;
-            margin-top: 8px;
-            border-top: 1px solid var(--border);
-        }
-
-        .page-num {
-            font-weight: 700;
-            color: var(--primary-dark);
-        }
-
-        @page {
-            size: A4 portrait;
-            margin: 0;
-        }
-
-        @media print {
-            body {
-                background: none;
-            }
-
-            .book-container {
-                padding: 0;
-                gap: 0;
-            }
-
-            .page {
-                box-shadow: none;
-                margin: 0;
-                width: 210mm;
-                height: 297mm;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
@@ -463,88 +44,80 @@
                                 Python &amp; Setup</span></div><span class="toc-page">ទំព័រ 3</span>
                     </a>
                     <a href="#chapter-02" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">02.</span><span class="toc-title">Python Variables
-                                &amp; Naming Rules</span></div><span class="toc-page">ទំព័រ 4</span>
+                        <div class="toc-left"><span class="toc-num">02.</span><span class="toc-title">Variables, Data
+                                Types &amp; Type Casting</span></div><span class="toc-page">ទំព័រ 4</span>
                     </a>
                     <a href="#chapter-03" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">03.</span><span class="toc-title">Python Data Types
-                                &amp; Type Casting (Detail)</span></div><span class="toc-page">ទំព័រ 5</span>
+                        <div class="toc-left"><span class="toc-num">03.</span><span class="toc-title">User Input &amp;
+                                String Formatting (f-strings)</span></div><span class="toc-page">ទំព័រ 5</span>
                     </a>
                     <a href="#chapter-04" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">04.</span><span class="toc-title">User Input &amp;
-                                String Formatting (f-strings)</span></div><span class="toc-page">ទំព័រ 6</span>
+                        <div class="toc-left"><span class="toc-num">04.</span><span class="toc-title">Python Operators
+                                (Arithmetic, Comparison, Logical)</span></div><span class="toc-page">ទំព័រ 6</span>
                     </a>
                     <a href="#chapter-05" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">05.</span><span class="toc-title">Arithmetic &amp;
-                                Assignment Operators</span></div><span class="toc-page">ទំព័រ 7</span>
+                        <div class="toc-left"><span class="toc-num">05.</span><span class="toc-title">Conditional
+                                Statements (if, elif, else)</span></div><span class="toc-page">ទំព័រ 7</span>
                     </a>
                     <a href="#chapter-06" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">06.</span><span class="toc-title">Comparison &amp;
-                                Logical Operators</span></div><span class="toc-page">ទំព័រ 8</span>
+                        <div class="toc-left"><span class="toc-num">06.</span><span class="toc-title">Loops in Python
+                                (for, while, break, continue)</span></div><span class="toc-page">ទំព័រ 8</span>
                     </a>
                     <a href="#chapter-07" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">07.</span><span class="toc-title">Conditional
-                                Statements (if, elif, else)</span></div><span class="toc-page">ទំព័រ 9</span>
+                        <div class="toc-left"><span class="toc-num">07.</span><span class="toc-title">Python Lists &amp;
+                                List Comprehension</span></div><span class="toc-page">ទំព័រ 9</span>
                     </a>
                     <a href="#chapter-08" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">08.</span><span class="toc-title">Loops in Python
-                                (for, while, break, continue)</span></div><span class="toc-page">ទំព័រ 10</span>
+                        <div class="toc-left"><span class="toc-num">08.</span><span class="toc-title">Tuples &amp;
+                                Sets</span></div><span class="toc-page">ទំព័រ 10</span>
                     </a>
                     <a href="#chapter-09" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">09.</span><span class="toc-title">Python Lists &amp;
-                                List Comprehension</span></div><span class="toc-page">ទំព័រ 11</span>
+                        <div class="toc-left"><span class="toc-num">09.</span><span class="toc-title">Python
+                                Dictionaries (Key-Value Pairs)</span></div><span class="toc-page">ទំព័រ 11</span>
                     </a>
                     <a href="#chapter-10" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">10.</span><span class="toc-title">Tuples &amp;
-                                Sets</span></div><span class="toc-page">ទំព័រ 12</span>
+                        <div class="toc-left"><span class="toc-num">10.</span><span class="toc-title">Functions,
+                                Parameters &amp; Return Values</span></div><span class="toc-page">ទំព័រ 12</span>
                     </a>
                     <a href="#chapter-11" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">11.</span><span class="toc-title">Python
-                                Dictionaries (Key-Value Pairs)</span></div><span class="toc-page">ទំព័រ 13</span>
+                        <div class="toc-left"><span class="toc-num">11.</span><span class="toc-title">*args, **kwargs
+                                &amp; Lambda Functions</span></div><span class="toc-page">ទំព័រ 13</span>
                     </a>
                     <a href="#chapter-12" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">12.</span><span class="toc-title">Functions,
-                                Parameters &amp; Return Values</span></div><span class="toc-page">ទំព័រ 14</span>
+                        <div class="toc-left"><span class="toc-num">12.</span><span class="toc-title">Modules, Packages
+                                &amp; PIP</span></div><span class="toc-page">ទំព័រ 14</span>
                     </a>
                     <a href="#chapter-13" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">13.</span><span class="toc-title">*args, **kwargs
-                                &amp; Lambda Functions</span></div><span class="toc-page">ទំព័រ 15</span>
+                        <div class="toc-left"><span class="toc-num">13.</span><span class="toc-title">Exception Handling
+                                (try, except, finally)</span></div><span class="toc-page">ទំព័រ 15</span>
                     </a>
                     <a href="#chapter-14" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">14.</span><span class="toc-title">Modules, Packages
-                                &amp; PIP</span></div><span class="toc-page">ទំព័រ 16</span>
+                        <div class="toc-left"><span class="toc-num">14.</span><span class="toc-title">File Handling
+                                (TXT, CSV &amp; JSON)</span></div><span class="toc-page">ទំព័រ 16</span>
                     </a>
                     <a href="#chapter-15" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">15.</span><span class="toc-title">Exception Handling
-                                (try, except, finally)</span></div><span class="toc-page">ទំព័រ 17</span>
+                        <div class="toc-left"><span class="toc-num">15.</span><span class="toc-title">OOP Part 1:
+                                Classes, Objects &amp; __init__</span></div><span class="toc-page">ទំព័រ 17</span>
                     </a>
                     <a href="#chapter-16" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">16.</span><span class="toc-title">File Handling
-                                (TXT, CSV &amp; JSON)</span></div><span class="toc-page">ទំព័រ 18</span>
+                        <div class="toc-left"><span class="toc-num">16.</span><span class="toc-title">OOP Part 2:
+                                Inheritance &amp; Polymorphism</span></div><span class="toc-page">ទំព័រ 18</span>
                     </a>
                     <a href="#chapter-17" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">17.</span><span class="toc-title">OOP Part 1:
-                                Classes, Objects &amp; __init__</span></div><span class="toc-page">ទំព័រ 19</span>
+                        <div class="toc-left"><span class="toc-num">17.</span><span class="toc-title">OOP Part 3:
+                                Encapsulation &amp; Magic Methods</span></div><span class="toc-page">ទំព័រ 19</span>
                     </a>
                     <a href="#chapter-18" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">18.</span><span class="toc-title">OOP Part 2:
-                                Inheritance &amp; Polymorphism</span></div><span class="toc-page">ទំព័រ 20</span>
+                        <div class="toc-left"><span class="toc-num">18.</span><span class="toc-title">Decorators &amp;
+                                Generators (Advanced Python)</span></div><span class="toc-page">ទំព័រ 20</span>
                     </a>
                     <a href="#chapter-19" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">19.</span><span class="toc-title">OOP Part 3:
-                                Encapsulation &amp; Magic Methods</span></div><span class="toc-page">ទំព័រ 21</span>
+                        <div class="toc-left"><span class="toc-num">19.</span><span class="toc-title">Working with APIs
+                                (requests) &amp; Virtual Env</span></div><span class="toc-page">ទំព័រ 21</span>
                     </a>
                     <a href="#chapter-20" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">20.</span><span class="toc-title">Decorators &amp;
-                                Generators (Advanced Python)</span></div><span class="toc-page">ទំព័រ 22</span>
-                    </a>
-                    <a href="#chapter-21" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">21.</span><span class="toc-title">Working with APIs
-                                (requests) &amp; Virtual Env</span></div><span class="toc-page">ទំព័រ 23</span>
-                    </a>
-                    <a href="#chapter-22" class="toc-row">
-                        <div class="toc-left"><span class="toc-num">22.</span><span class="toc-title">Database
-                                Integration (SQLite / MySQL CRUD)</span></div><span class="toc-page">ទំព័រ 24</span>
+                        <div class="toc-left"><span class="toc-num">20.</span><span class="toc-title">Database
+                                Integration (SQLite / MySQL CRUD)</span></div><span class="toc-page">ទំព័រ 22</span>
                     </a>
                 </nav>
             </div>
@@ -617,44 +190,43 @@
             </footer>
         </section>
 
-        <!-- 02. Variables & Naming Rules -->
+        <!-- 02. Variables & Data Types -->
         <section class="page" id="chapter-02">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>02. Python Variables &amp; Naming Rules</span>
+                    <span>02. Variables, Data Types &amp; Type Casting</span>
                 </header>
 
-                <h2 class="ch-title">02. Python Variables &amp; Naming Rules</h2>
+                <h2 class="ch-title">02. Variables, Data Types &amp; Type Casting</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
-                <p class="step-text"><strong>Variable (អថេរ)</strong> គឺជាប្រអប់ផ្ទុកទិន្នន័យនៅក្នុង Memory
-                    របស់កុំព្យូទ័រ។ ក្នុង Python យើងបង្កើតអថេរភ្លាមៗដោយប្រើសញ្ញា <code class="ic">=</code>
-                    ដើម្បីផ្តល់តម្លៃ ដោយមិនចាំបាច់ប្រកាសប្រភេទទិន្នន័យជាមុនឡើយ។</p>
+                <p class="step-text"><strong>Variable (អថេរ)</strong> គឺជាឈ្មោះតំណាងឱ្យទីតាំងផ្ទុកទិន្នន័យក្នុង Memory។
+                    Python ស្គាល់ប្រភេទទិន្នន័យដោយស្វ័យប្រវត្តិ (Dynamic Typing) ដោយមិនបាច់ប្រកាសប្រភេទមុនឡើយ។</p>
 
                 <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
                 <ul class="step-list">
-                    <li><strong>ចាប់ផ្តើមឈ្មោះអថេរ៖</strong> ត្រូវផ្តើមដោយអក្សរ (<code class="ic">a-z, A-Z</code>)
-                        ឬសញ្ញា <code class="ic">_</code> ប៉ុណ្ណោះ (ហាមផ្តើមដោយលេខ ឧ. <code class="ic">1user</code>
-                        គឺខុស)។</li>
-                    <li><strong>ក្បួន <code class="ic">snake_case</code> ៖</strong> ហាមដកឃ្លា ឬប្រើសញ្ញាដក <code
-                            class="ic">-</code> ក្នុងឈ្មោះអថេរ ត្រូវប្រើ <code class="ic">_</code> ភ្ជាប់ពាក្យ (ឧ. <code
-                            class="ic">student_name</code>)។</li>
-                    <li><strong>Case-Sensitive (ប្រកាន់អក្សរធំ-តូច)៖</strong> អថេរ <code class="ic">age</code> និង <code
-                            class="ic">Age</code> គឺជាអថេរពីរផ្សេងគ្នា។</li>
-                    <li><strong>Multiple Assignment៖</strong> អាចផ្តល់តម្លៃឱ្យអថេរច្រើនក្នុងបន្ទាត់តែមួយ (ឧ. <code
-                            class="ic">x, y = 10, 20</code>)។</li>
+                    <li><code class="ic">str</code> <strong>(String)៖</strong> ផ្ទុកទិន្នន័យជាអត្ថបទ ត្រូវសរសេរក្នុង
+                        <code class="ic">"..."</code> ឬ <code class="ic">'...'</code>។
+                    </li>
+                    <li><code class="ic">int</code> <strong>(Integer)៖</strong> ផ្ទុកទិន្នន័យជាលេខចំនួនគត់ គ្មានក្បៀស
+                        (ឧ. <code class="ic">20</code>, <code class="ic">-5</code>)។</li>
+                    <li><code class="ic">float</code> <strong>(Float)៖</strong> ផ្ទុកទិន្នន័យជាលេខទសភាគ មានក្បៀស (ឧ.
+                        <code class="ic">15.5</code>, <code class="ic">3.14</code>)។
+                    </li>
+                    <li><code class="ic">bool</code> <strong>(Boolean)៖</strong> ផ្ទុកតម្លៃពិត ឬមិនពិត គឺ <code
+                            class="ic">True</code> និង <code class="ic">False</code>។</li>
+                    <li><code class="ic">int()</code>, <code class="ic">float()</code>, <code class="ic">str()</code>
+                        <strong>(Type Casting)៖</strong> ប្រើសម្រាប់បម្លែងប្រភេទទិន្នន័យពីមួយទៅមួយ។
+                    </li>
                 </ul>
 
                 <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
                 <div class="code-box">
-                    <pre><span class="t-attr">student_name</span> = <span class="t-str">"លាត ប្រុស"</span>
-<span class="t-attr">student_age</span> = <span class="t-num">20</span>
-<span class="t-attr">x</span>, <span class="t-attr">y</span> = <span class="t-num">10</span>, <span class="t-num">20</span>
-
-<span class="t-com"># កែប្រែតម្លៃថ្មីឱ្យអថេរចាស់</span>
-<span class="t-attr">student_age</span> = <span class="t-num">21</span>
-<span class="t-tag">print</span>(student_name, <span class="t-str">"| អាយុថ្មី៖"</span>, student_age, <span class="t-str">"| x+y ="</span>, x + y)</pre>
+                    <pre><span class="t-attr">student_name</span> = <span class="t-str">"លាត ប្រុស"</span>   <span class="t-com"># str</span>
+<span class="t-attr">price</span> = <span class="t-num">15.5</span>                 <span class="t-com"># float</span>
+<span class="t-attr">total</span> = <span class="t-tag">int</span>(<span class="t-str">"50"</span>) + <span class="t-num">10</span>       <span class="t-com"># បម្លែង String "50" ទៅជា int</span>
+<span class="t-tag">print</span>(<span class="t-tag">type</span>(price), <span class="t-str">"| សរុប៖"</span>, total)</pre>
                 </div>
 
                 <p class="step-heading">4. Output (លទ្ធផលនៅលើ Terminal):</p>
@@ -665,16 +237,15 @@
                         <div class="browser-url-bar">Terminal: python variables.py</div>
                     </div>
                     <div class="browser-canvas"
-                        style="background:#0F172A; color:#4ADE80; font-family:monospace; font-size:0.82rem;">
-                        លាត ប្រុស | អាយុថ្មី៖ 21 | x+y = 30
+                        style="background:#0F172A; color:#38BDF8; font-family:monospace; font-size:0.82rem;">
+                        &lt;class 'float'&gt; | សរុប៖ 60
                     </div>
                 </div>
 
                 <div class="summary-box">
-                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> ត្រូវដាក់ឈ្មោះអថេរឱ្យមានអត្ថន័យច្បាស់លាស់តាមក្បួន <code
-                        class="ic">snake_case</code> និងចៀសវាងប្រើពាក្យគន្លឹះរបស់ Python ដូចជា <code
-                        class="ic">if</code>, <code class="ic">for</code>, <code class="ic">class</code>
-                    មកធ្វើជាឈ្មោះអថេរ។
+                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> ប្រើក្បួន <code class="ic">snake_case</code>
+                    សម្រាប់ដាក់ឈ្មោះអថេរ និងប្រើ <code class="ic">int()</code>, <code class="ic">float()</code>, <code
+                        class="ic">str()</code> ពេលចង់បម្លែងប្រភេទទិន្នន័យ។
                 </div>
             </div>
 
@@ -684,87 +255,15 @@
             </footer>
         </section>
 
-        <!-- 03. Data Types & Type Casting (Detail) -->
+        <!-- 03. User Input & f-strings -->
         <section class="page" id="chapter-03">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>03. Python Data Types &amp; Type Casting</span>
+                    <span>03. User Input &amp; String Formatting</span>
                 </header>
 
-                <h2 class="ch-title">03. Python Data Types &amp; Type Casting (Detail)</h2>
-
-                <p class="step-heading">1. Definition (និយមន័យ):</p>
-                <p class="step-text"><strong>Data Types (ប្រភេទទិន្នន័យ)</strong>
-                    គឺជាការបែងចែកប្រភេទតម្លៃដែលអថេរនីមួយៗផ្ទុក ដើម្បីឱ្យ Python ដឹងថាត្រូវយកវាទៅគណនា
-                    ឬភ្ជាប់អត្ថបទតាមរបៀបណា។</p>
-
-                <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
-                <ul class="step-list">
-                    <li><code class="ic">str</code> <strong>(String)៖</strong> ផ្ទុកទិន្នន័យជាអត្ថបទ ឬតួអក្សរ សរសេរក្នុង
-                        <code class="ic">"..."</code> ឬ <code class="ic">'...'</code> (ឧ. <code
-                            class="ic">"Hello"</code>)។</li>
-                    <li><code class="ic">int</code> <strong>(Integer)៖</strong> ផ្ទុកទិន្នន័យជាលេខចំនួនគត់ ទាំងវិជ្ជមាន
-                        និងអវិជ្ជមាន គ្មានក្បៀស (ឧ. <code class="ic">100</code>, <code class="ic">-25</code>)។</li>
-                    <li><code class="ic">float</code> <strong>(Floating Point)៖</strong> ផ្ទុកទិន្នន័យជាលេខទសភាគ
-                        ដែលមានចំណុចក្បៀស (ឧ. <code class="ic">19.99</code>, <code class="ic">3.14</code>)។</li>
-                    <li><code class="ic">bool</code> <strong>(Boolean)៖</strong> ផ្ទុកតម្លៃតក្កវិទ្យា មានតែ ២ គត់គឺ
-                        <code class="ic">True</code> (ពិត) និង <code class="ic">False</code> (មិនពិត)។</li>
-                    <li><code class="ic">NoneType</code> <strong>(None)៖</strong> តំណាងឱ្យភាពទទេ ឬគ្មានតម្លៃអ្វីទាំងអស់
-                        (<code class="ic">data = None</code>)។</li>
-                    <li><code class="ic">type()</code> &amp; <strong>Type Casting (<code class="ic">int()</code>, <code
-                                class="ic">float()</code>, <code class="ic">str()</code>)៖</strong>
-                        ពិនិត្យប្រភេទទិន្នន័យ និងបម្លែងប្រភេទទិន្នន័យពីមួយទៅមួយ។</li>
-                </ul>
-
-                <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
-                <div class="code-box">
-                    <pre><span class="t-attr">text</span> = <span class="t-str">"Python"</span>          <span class="t-com"># str</span>
-<span class="t-attr">qty</span> = <span class="t-num">5</span>                  <span class="t-com"># int</span>
-<span class="t-attr">price</span> = <span class="t-num">12.50</span>            <span class="t-com"># float</span>
-<span class="t-attr">is_active</span> = <span class="t-tag">True</span>         <span class="t-com"># bool</span>
-<span class="t-attr">empty_val</span> = <span class="t-tag">None</span>         <span class="t-com"># NoneType</span>
-
-<span class="t-com"># Type Casting: បម្លែងអក្សរ "100" ទៅជា int ដើម្បីបូកលេខ</span>
-<span class="t-attr">result</span> = <span class="t-tag">int</span>(<span class="t-str">"100"</span>) + qty
-<span class="t-tag">print</span>(<span class="t-tag">type</span>(price), <span class="t-tag">type</span>(is_active), <span class="t-str">"| Result:"</span>, result)</pre>
-                </div>
-
-                <p class="step-heading">4. Output (លទ្ធផលនៅលើ Terminal):</p>
-                <div class="browser-window">
-                    <div class="browser-header">
-                        <div class="browser-dots"><span class="browser-dot dot-red"></span><span
-                                class="browser-dot dot-yellow"></span><span class="browser-dot dot-green"></span></div>
-                        <div class="browser-url-bar">Terminal: python datatypes.py</div>
-                    </div>
-                    <div class="browser-canvas"
-                        style="background:#0F172A; color:#4ADE80; font-family:monospace; font-size:0.82rem;">
-                        &lt;class 'float'&gt; &lt;class 'bool'&gt; | Result: 105
-                    </div>
-                </div>
-
-                <div class="summary-box">
-                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> Python មិនអនុញ្ញាតឱ្យយក <code class="ic">str</code>
-                    ទៅបូកជាមួយ <code class="ic">int</code> ដោយផ្ទាល់ទេ ត្រូវប្រើ <code class="ic">int()</code> ឬ <code
-                        class="ic">float()</code> បម្លែងជាមុនសិន។
-                </div>
-            </div>
-
-            <footer class="page-foot">
-                <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 5</span>
-            </footer>
-        </section>
-
-        <!-- 04. User Input & f-strings -->
-        <section class="page" id="chapter-04">
-            <div class="page-body">
-                <header class="page-top-header">
-                    <a href="#toc">Python Programming</a>
-                    <span>04. User Input &amp; String Formatting</span>
-                </header>
-
-                <h2 class="ch-title">04. User Input &amp; String Formatting (f-strings)</h2>
+                <h2 class="ch-title">03. User Input &amp; String Formatting (f-strings)</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><code class="ic">input()</code> ប្រើសម្រាប់ទទួលទិន្នន័យពីអ្នកប្រើប្រាស់តាម Keyboard
@@ -815,48 +314,48 @@
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 6</span>
+                <span class="page-num">ទំព័រ 5</span>
             </footer>
         </section>
 
-        <!-- 05. Arithmetic & Assignment Operators -->
-        <section class="page" id="chapter-05">
+        <!-- 04. Operators -->
+        <section class="page" id="chapter-04">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>05. Arithmetic &amp; Assignment Operators</span>
+                    <span>04. Python Operators</span>
                 </header>
 
-                <h2 class="ch-title">05. Arithmetic &amp; Assignment Operators</h2>
+                <h2 class="ch-title">04. Python Operators (Arithmetic, Comparison, Logical)</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
-                <p class="step-text"><strong>Arithmetic Operators</strong> ប្រើសម្រាប់ធ្វើប្រមាណវិធីគណិតវិទ្យា រីឯ
-                    <strong>Assignment Operators</strong> ប្រើសម្រាប់ផ្តល់ និងបូកបន្ថែមតម្លៃឱ្យអថេរដោយសរសេរកាត់ខ្លី។</p>
+                <p class="step-text"><strong>Operators (សញ្ញាប្រមាណវិធី)</strong> គឺជានិមិត្តសញ្ញាប្រើសម្រាប់គណនាលេខ
+                    ប្រៀបធៀបតម្លៃ និងភ្ជាប់លក្ខខណ្ឌតក្កវិទ្យា (Logic)។</p>
 
                 <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
                 <ul class="step-list">
                     <li><code class="ic">+</code>, <code class="ic">-</code>, <code class="ic">*</code>, <code
-                            class="ic">/</code> <strong>៖</strong> បូក ដក គុណ និងចែកយកទសភាគ (ឧ. <code
-                            class="ic">10 / 3 = 3.333...</code>)។</li>
-                    <li><code class="ic">//</code> <strong>(Floor Division)៖</strong> ចែកយកតែចំនួនគត់ កាត់ក្បៀសចោល (ឧ.
-                        <code class="ic">10 // 3 = 3</code>)។</li>
-                    <li><code class="ic">%</code> <strong>(Modulus)៖</strong> ចែកយកសំណល់ (ឧ. <code
-                            class="ic">10 % 3 = 1</code>)។</li>
-                    <li><code class="ic">**</code> <strong>(Exponentiation)៖</strong> លើកជាស្វ័យគុណ (ឧ. <code
-                            class="ic">2 ** 3 = 8</code>)។</li>
-                    <li><code class="ic">+=</code>, <code class="ic">-=</code>, <code class="ic">*=</code>, <code
-                            class="ic">/=</code> <strong>(Assignment)៖</strong> សរសេរកាត់ (ឧ. <code
-                            class="ic">x += 5</code> មានន័យស្មើនឹង <code class="ic">x = x + 5</code>)។</li>
+                            class="ic">/</code> <strong>(គណិតវិទ្យាទូទៅ)៖</strong> បូក ដក គុណ និងចែកយកទសភាគ។</li>
+                    <li><code class="ic">//</code> &amp; <code class="ic">%</code> <strong>(ចែកយកគត់ &amp;
+                            សំណល់)៖</strong> <code class="ic">//</code> ចែកយកចំនួនគត់ រីឯ <code class="ic">%</code>
+                        ចែកយកសំណល់។</li>
+                    <li><code class="ic">**</code> <strong>(ស្វ័យគុណ)៖</strong> លើកជាស្វ័យគុណ (ឧ. <code
+                            class="ic">2 ** 3</code> ស្មើនឹង <code class="ic">8</code>)។</li>
+                    <li><code class="ic">==</code>, <code class="ic">!=</code>, <code class="ic">&gt;</code>, <code
+                            class="ic">&lt;</code> <strong>(ប្រៀបធៀប)៖</strong> ផ្តល់លទ្ធផលជា <code
+                            class="ic">True</code> ឬ <code class="ic">False</code>។</li>
+                    <li><code class="ic">and</code>, <code class="ic">or</code>, <code class="ic">not</code>
+                        <strong>(តក្កវិទ្យា)៖</strong> ភ្ជាប់លក្ខខណ្ឌច្រើនចូលគ្នា។
+                    </li>
                 </ul>
 
                 <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
                 <div class="code-box">
                     <pre><span class="t-attr">a</span>, <span class="t-attr">b</span> = <span class="t-num">10</span>, <span class="t-num">3</span>
-<span class="t-tag">print</span>(<span class="t-str">"ចែកគត់ (//)៖"</span>, a // b, <span class="t-str">"| សំណល់ (%)៖"</span>, a % b, <span class="t-str">"| ស្វ័យគុណ (**)៖"</span>, a ** b)
+<span class="t-tag">print</span>(<span class="t-str">"ចែកយកគត់ (//)៖"</span>, a // b, <span class="t-str">"| សំណល់ (%)៖"</span>, a % b)
 
-<span class="t-attr">score</span> = <span class="t-num">50</span>
-score += <span class="t-num">15</span>   <span class="t-com"># បូកបន្ថែម 15 ចូលក្នុង score</span>
-<span class="t-tag">print</span>(<span class="t-str">"ពិន្ទុបន្ទាប់ពី += 15៖"</span>, score)</pre>
+<span class="t-attr">has_ticket</span>, <span class="t-attr">age</span> = <span class="t-tag">True</span>, <span class="t-num">19</span>
+<span class="t-tag">print</span>(<span class="t-str">"អាចចូលរួមបាន៖"</span>, has_ticket <span class="t-tag">and</span> age >= <span class="t-num">18</span>)</pre>
                 </div>
 
                 <p class="step-heading">4. Output (លទ្ធផលនៅលើ Terminal):</p>
@@ -864,106 +363,37 @@ score += <span class="t-num">15</span>   <span class="t-com"># បូកបន�
                     <div class="browser-header">
                         <div class="browser-dots"><span class="browser-dot dot-red"></span><span
                                 class="browser-dot dot-yellow"></span><span class="browser-dot dot-green"></span></div>
-                        <div class="browser-url-bar">Terminal: python arithmetic.py</div>
+                        <div class="browser-url-bar">Terminal: python operators.py</div>
                     </div>
                     <div class="browser-canvas"
                         style="background:#0F172A; color:#38BDF8; font-family:monospace; font-size:0.82rem;">
-                        <div>ចែកគត់ (//)៖ 3 | សំណល់ (%)៖ 1 | ស្វ័យគុណ (**)៖ 1000</div>
-                        <div style="color:#4ADE80;">ពិន្ទុបន្ទាប់ពី += 15៖ 65</div>
+                        <div>ចែកយកគត់ (//)៖ 3 | សំណល់ (%)៖ 1</div>
+                        <div style="color:#4ADE80;">អាចចូលរួមបាន៖ True</div>
                     </div>
                 </div>
 
                 <div class="summary-box">
-                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> សញ្ញា <code class="ic">/</code> តែងតែផ្តល់លទ្ធផលជា <code
-                        class="ic">float</code> ជានិច្ច ទោះបីចែកដាច់ក៏ដោយ (ឧ. <code class="ic">10 / 2 = 5.0</code>)។
+                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> កុំច្រឡំរវាង <code class="ic">=</code> (ផ្តល់តម្លៃ) និង
+                    <code class="ic">==</code> (ប្រៀបធៀបភាពស្មើគ្នា) ហើយសញ្ញា <code class="ic">%</code>
+                    មានប្រយោជន៍ខ្លាំងសម្រាប់រកលេខគូ/សេស។
                 </div>
             </div>
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 7</span>
+                <span class="page-num">ទំព័រ 6</span>
             </footer>
         </section>
 
-        <!-- 06. Comparison & Logical Operators -->
-        <section class="page" id="chapter-06">
+        <!-- 05. Conditional Statements -->
+        <section class="page" id="chapter-05">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>06. Comparison &amp; Logical Operators</span>
+                    <span>05. Conditional Statements</span>
                 </header>
 
-                <h2 class="ch-title">06. Comparison &amp; Logical Operators</h2>
-
-                <p class="step-heading">1. Definition (និយមន័យ):</p>
-                <p class="step-text"><strong>Comparison Operators</strong> ប្រើសម្រាប់ប្រៀបធៀបតម្លៃពីរ រីឯ
-                    <strong>Logical Operators</strong> ប្រើសម្រាប់ភ្ជាប់លក្ខខណ្ឌច្រើនចូលគ្នា ដោយលទ្ធផលតែងតែចេញជា <code
-                        class="ic">True</code> ឬ <code class="ic">False</code> ជានិច្ច។</p>
-
-                <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
-                <ul class="step-list">
-                    <li><code class="ic">==</code> <strong>(Equal to)៖</strong> ពិនិត្យថាតើតម្លៃទាំងពីរស្មើគ្នាឬអត់ (ឧ.
-                        <code class="ic">5 == 5</code> គឺ <code class="ic">True</code>)។</li>
-                    <li><code class="ic">!=</code> <strong>(Not Equal to)៖</strong> ពិនិត្យថាតើតម្លៃទាំងពីរខុសគ្នាឬអត់
-                        (ឧ. <code class="ic">5 != 3</code> គឺ <code class="ic">True</code>)។</li>
-                    <li><code class="ic">&gt;</code>, <code class="ic">&lt;</code>, <code class="ic">&gt;=</code>, <code
-                            class="ic">&lt;=</code> <strong>៖</strong> ធំជាង តូចជាង ធំជាងឬស្មើ និងតូចជាងឬស្មើ។</li>
-                    <li><code class="ic">and</code> <strong>(និង)៖</strong> ផ្តល់ <code class="ic">True</code>
-                        លុះត្រាតែលក្ខខណ្ឌទាំងសងខាងពិតទាំងពីរ។</li>
-                    <li><code class="ic">or</code> <strong>(ឬ)៖</strong> ផ្តល់ <code class="ic">True</code>
-                        ប្រសិនបើមានលក្ខខណ្ឌយ៉ាងតិចមួយពិត។</li>
-                    <li><code class="ic">not</code> <strong>(មិនមែន)៖</strong> បញ្ច្រាសលទ្ធផលពី <code
-                            class="ic">True</code> ទៅ <code class="ic">False</code> និងពី <code class="ic">False</code>
-                        ទៅ <code class="ic">True</code>។</li>
-                </ul>
-
-                <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
-                <div class="code-box">
-                    <pre><span class="t-attr">x</span>, <span class="t-attr">y</span> = <span class="t-num">10</span>, <span class="t-num">20</span>
-<span class="t-tag">print</span>(<span class="t-str">"x == y:"</span>, x == y, <span class="t-str">"| x != y:"</span>, x != y, <span class="t-str">"| x < y:"</span>, x < y)
-
-<span class="t-attr">age</span> = <span class="t-num">20</span>
-<span class="t-attr">has_id</span> = <span class="t-tag">True</span>
-<span class="t-tag">print</span>(<span class="t-str">"អាចបើកបរបាន (and):"</span>, age >= <span class="t-num">18</span> <span class="t-tag">and</span> has_id)
-<span class="t-tag">print</span>(<span class="t-str">"បញ្ច្រាស (not):"</span>, <span class="t-tag">not</span> has_id)</pre>
-                </div>
-
-                <p class="step-heading">4. Output (លទ្ធផលនៅលើ Terminal):</p>
-                <div class="browser-window">
-                    <div class="browser-header">
-                        <div class="browser-dots"><span class="browser-dot dot-red"></span><span
-                                class="browser-dot dot-yellow"></span><span class="browser-dot dot-green"></span></div>
-                        <div class="browser-url-bar">Terminal: python comparison.py</div>
-                    </div>
-                    <div class="browser-canvas"
-                        style="background:#0F172A; color:#38BDF8; font-family:monospace; font-size:0.82rem;">
-                        <div>x == y: False | x != y: True | x &lt; y: True</div>
-                        <div style="color:#4ADE80;">អាចបើកបរបាន (and): True | បញ្ច្រាស (not): False</div>
-                    </div>
-                </div>
-
-                <div class="summary-box">
-                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> Comparison និង Logical Operators
-                    គឺជាគ្រឹះដ៏សំខាន់បំផុតសម្រាប់យកទៅសរសេរលក្ខខណ្ឌក្នុង <code class="ic">if / elif / else</code> និង
-                    <code class="ic">while loop</code>។
-                </div>
-            </div>
-
-            <footer class="page-foot">
-                <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 8</span>
-            </footer>
-        </section>
-
-        <!-- 07. Conditional Statements -->
-        <section class="page" id="chapter-07">
-            <div class="page-body">
-                <header class="page-top-header">
-                    <a href="#toc">Python Programming</a>
-                    <span>07. Conditional Statements</span>
-                </header>
-
-                <h2 class="ch-title">07. Conditional Statements (if, elif, else)</h2>
+                <h2 class="ch-title">05. Conditional Statements (if, elif, else)</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text">Conditional Statements
@@ -1016,19 +446,19 @@ score += <span class="t-num">15</span>   <span class="t-com"># បូកបន�
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 9</span>
+                <span class="page-num">ទំព័រ 7</span>
             </footer>
         </section>
 
-        <!-- 08. Loops -->
-        <section class="page" id="chapter-08">
+        <!-- 06. Loops -->
+        <section class="page" id="chapter-06">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>08. Loops in Python</span>
+                    <span>06. Loops in Python</span>
                 </header>
 
-                <h2 class="ch-title">08. Loops in Python (for, while, break, continue)</h2>
+                <h2 class="ch-title">06. Loops in Python (for, while, break, continue)</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>Loop</strong> គឺជាការបញ្ជាឱ្យកូដដំណើរការដដែលៗដោយស្វ័យប្រវត្តិ
@@ -1080,28 +510,30 @@ score += <span class="t-num">15</span>   <span class="t-com"># បូកបន�
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 10</span>
+                <span class="page-num">ទំព័រ 8</span>
             </footer>
         </section>
 
-        <!-- 09. Lists -->
-        <section class="page" id="chapter-09">
+        <!-- 07. Lists -->
+        <section class="page" id="chapter-07">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>09. Python Lists</span>
+                    <span>07. Python Lists</span>
                 </header>
 
-                <h2 class="ch-title">09. Python Lists &amp; List Comprehension</h2>
+                <h2 class="ch-title">07. Python Lists &amp; List Comprehension</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>List</strong> គឺជាបញ្ជីផ្ទុកទិន្នន័យច្រើនក្នុងអថេរតែមួយ ដោយប្រើសញ្ញាគ្នាប
-                    <code class="ic">[ ]</code> មានលំដាប់ (Ordered) និងអាចកែប្រែតម្លៃបាន (Mutable)។</p>
+                    <code class="ic">[ ]</code> មានលំដាប់ (Ordered) និងអាចកែប្រែតម្លៃបាន (Mutable)។
+                </p>
 
                 <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
                 <ul class="step-list">
                     <li><strong>Index (ទីតាំងទិន្នន័យ)៖</strong> រាប់ចាប់ពី <code class="ic">0</code> (ធាតុទី ១) និង
-                        <code class="ic">-1</code> (ធាតុចុងក្រោយ)។</li>
+                        <code class="ic">-1</code> (ធាតុចុងក្រោយ)។
+                    </li>
                     <li><code class="ic">.append(item)</code> <strong>៖</strong> បន្ថែមធាតុថ្មីទៅចុងបញ្ចប់នៃ List។</li>
                     <li><code class="ic">.insert(index, item)</code> <strong>៖</strong> បញ្ចូលធាតុថ្មីតាមទីតាំង Index
                         កំណត់។</li>
@@ -1141,23 +573,24 @@ courses.append(<span class="t-str">"React"</span>)
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 11</span>
+                <span class="page-num">ទំព័រ 9</span>
             </footer>
         </section>
 
-        <!-- 10. Tuples & Sets -->
-        <section class="page" id="chapter-10">
+        <!-- 08. Tuples & Sets -->
+        <section class="page" id="chapter-08">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>10. Tuples &amp; Sets</span>
+                    <span>08. Tuples &amp; Sets</span>
                 </header>
 
-                <h2 class="ch-title">10. Tuples &amp; Sets</h2>
+                <h2 class="ch-title">08. Tuples &amp; Sets</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>Tuple</strong> គឺជាបញ្ជីថេរមិនអាចកែប្រែបាន (Immutable) រីឯ
-                    <strong>Set</strong> គឺជាបញ្ជីគ្មានលំដាប់ និងមិនឱ្យមានតម្លៃស្ទួនគ្នា (Unique)។</p>
+                    <strong>Set</strong> គឺជាបញ្ជីគ្មានលំដាប់ និងមិនឱ្យមានតម្លៃស្ទួនគ្នា (Unique)។
+                </p>
 
                 <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
                 <ul class="step-list">
@@ -1166,7 +599,8 @@ courses.append(<span class="t-str">"React"</span>)
                     <li><code class="ic">set {}</code> <strong>(ទិន្នន័យមិនស្ទួន)៖</strong>
                         លុបទិន្នន័យដែលស្ទួនគ្នាចោលដោយស្វ័យប្រវត្តិ។</li>
                     <li><code class="ic">.union()</code> &amp; <code class="ic">.intersection()</code>
-                        <strong>៖</strong> ប្រើសម្រាប់បូកបញ្ចូលគ្នា ឬរកចំណុចរួមរវាង Set ពីរ។</li>
+                        <strong>៖</strong> ប្រើសម្រាប់បូកបញ្ចូលគ្នា ឬរកចំណុចរួមរវាង Set ពីរ។
+                    </li>
                 </ul>
 
                 <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
@@ -1201,19 +635,19 @@ courses.append(<span class="t-str">"React"</span>)
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 12</span>
+                <span class="page-num">ទំព័រ 10</span>
             </footer>
         </section>
 
-        <!-- 11. Dictionaries -->
-        <section class="page" id="chapter-11">
+        <!-- 09. Dictionaries -->
+        <section class="page" id="chapter-09">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>11. Python Dictionaries</span>
+                    <span>09. Python Dictionaries</span>
                 </header>
 
-                <h2 class="ch-title">11. Python Dictionaries (Key-Value Pairs)</h2>
+                <h2 class="ch-title">09. Python Dictionaries (Key-Value Pairs)</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>Dictionary</strong> គឺជារចនាសម្ព័ន្ធផ្ទុកទិន្នន័យជាគូ <strong>Key:
@@ -1262,19 +696,19 @@ student[<span class="t-str">"city"</span>] = <span class="t-str">"Siem Reap"</sp
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 13</span>
+                <span class="page-num">ទំព័រ 11</span>
             </footer>
         </section>
 
-        <!-- 12. Functions -->
-        <section class="page" id="chapter-12">
+        <!-- 10. Functions -->
+        <section class="page" id="chapter-10">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>12. Functions, Parameters &amp; Return</span>
+                    <span>10. Functions, Parameters &amp; Return</span>
                 </header>
 
-                <h2 class="ch-title">12. Functions, Parameters &amp; Return Values</h2>
+                <h2 class="ch-title">10. Functions, Parameters &amp; Return Values</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>Function (អនុគមន៍)</strong>
@@ -1284,7 +718,8 @@ student[<span class="t-str">"city"</span>] = <span class="t-str">"Siem Reap"</sp
                 <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
                 <ul class="step-list">
                     <li><code class="ic">def function_name():</code> <strong>(បង្កើតអនុគមន៍)៖</strong> ប្រើពាក្យគន្លឹះ
-                        <code class="ic">def</code> ដើម្បីប្រកាសអនុគមន៍។</li>
+                        <code class="ic">def</code> ដើម្បីប្រកាសអនុគមន៍។
+                    </li>
                     <li><strong>Parameters (តម្លៃទទួលចូល)៖</strong> អថេរក្នុងវង់ក្រចកសម្រាប់ទទួលទិន្នន័យមកគណនា។</li>
                     <li><strong>Default Parameter៖</strong> កំណត់តម្លៃលំនាំដើមទុកជាមុន (ឧ. <code
                             class="ic">discount=0</code>)។</li>
@@ -1322,19 +757,19 @@ student[<span class="t-str">"city"</span>] = <span class="t-str">"Siem Reap"</sp
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 14</span>
+                <span class="page-num">ទំព័រ 12</span>
             </footer>
         </section>
 
-        <!-- 13. *args, **kwargs & Lambda -->
-        <section class="page" id="chapter-13">
+        <!-- 11. *args, **kwargs & Lambda -->
+        <section class="page" id="chapter-11">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>13. *args, **kwargs &amp; Lambda Functions</span>
+                    <span>11. *args, **kwargs &amp; Lambda Functions</span>
                 </header>
 
-                <h2 class="ch-title">13. *args, **kwargs &amp; Lambda Functions</h2>
+                <h2 class="ch-title">11. *args, **kwargs &amp; Lambda Functions</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text">អ្នកអាចបង្កើតអនុគមន៍ដែលទទួលតម្លៃចូលមិនកំណត់ចំនួនដោយប្រើ <code
@@ -1383,24 +818,25 @@ student[<span class="t-str">"city"</span>] = <span class="t-str">"Siem Reap"</sp
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 15</span>
+                <span class="page-num">ទំព័រ 13</span>
             </footer>
         </section>
 
-        <!-- 14. Modules & PIP -->
-        <section class="page" id="chapter-14">
+        <!-- 12. Modules & PIP -->
+        <section class="page" id="chapter-12">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>14. Modules, Packages &amp; PIP</span>
+                    <span>12. Modules, Packages &amp; PIP</span>
                 </header>
 
-                <h2 class="ch-title">14. Modules, Packages &amp; PIP</h2>
+                <h2 class="ch-title">12. Modules, Packages &amp; PIP</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>Module</strong> គឺជាឯកសារ <code class="ic">.py</code>
                     ដែលផ្ទុកអនុគមន៍សម្រាប់យកទៅប្រើក្នុងឯកសារផ្សេងតាមរយៈ <code class="ic">import</code>។ រីឯ
-                    <strong>PIP</strong> គឺជាកម្មវិធីដំឡើងកញ្ចប់កូដខាងក្រៅរបស់ Python។</p>
+                    <strong>PIP</strong> គឺជាកម្មវិធីដំឡើងកញ្ចប់កូដខាងក្រៅរបស់ Python។
+                </p>
 
                 <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
                 <ul class="step-list">
@@ -1442,19 +878,19 @@ student[<span class="t-str">"city"</span>] = <span class="t-str">"Siem Reap"</sp
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 16</span>
+                <span class="page-num">ទំព័រ 14</span>
             </footer>
         </section>
 
-        <!-- 15. Exception Handling -->
-        <section class="page" id="chapter-15">
+        <!-- 13. Exception Handling -->
+        <section class="page" id="chapter-13">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>15. Exception Handling</span>
+                    <span>13. Exception Handling</span>
                 </header>
 
-                <h2 class="ch-title">15. Exception Handling (try, except, finally)</h2>
+                <h2 class="ch-title">13. Exception Handling (try, except, finally)</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>Exception Handling</strong> គឺជាបច្ចេកទេសចាប់ និងដោះស្រាយកំហុស (Runtime
@@ -1501,19 +937,19 @@ student[<span class="t-str">"city"</span>] = <span class="t-str">"Siem Reap"</sp
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 17</span>
+                <span class="page-num">ទំព័រ 15</span>
             </footer>
         </section>
 
-        <!-- 16. File Handling -->
-        <section class="page" id="chapter-16">
+        <!-- 14. File Handling -->
+        <section class="page" id="chapter-14">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>16. File Handling (TXT &amp; JSON)</span>
+                    <span>14. File Handling (TXT &amp; JSON)</span>
                 </header>
 
-                <h2 class="ch-title">16. File Handling (TXT, CSV &amp; JSON)</h2>
+                <h2 class="ch-title">14. File Handling (TXT, CSV &amp; JSON)</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>File Handling</strong> គឺជាការអាន សរសេរ
@@ -1536,7 +972,7 @@ student[<span class="t-str">"city"</span>] = <span class="t-str">"Siem Reap"</sp
 <span class="t-tag">with</span> <span class="t-tag">open</span>(<span class="t-str">"note.txt"</span>, <span class="t-str">"w"</span>, encoding=<span class="t-str">"utf-8"</span>) <span class="t-tag">as</span> f:
     f.write(<span class="t-str">"មេរៀន Python ពីមូលដ្ឋានដល់ការអនុវត្ត"</span>)
 
-<span class="t-attr">data</span> = {<span class="t-str">"course"</span>: <span class="t-str">"Python"</span>, <span class="t-str">"chapters"</span>: <span class="t-num">22</span>}
+<span class="t-attr">data</span> = {<span class="t-str">"course"</span>: <span class="t-str">"Python"</span>, <span class="t-str">"chapters"</span>: <span class="t-num">20</span>}
 <span class="t-tag">with</span> <span class="t-tag">open</span>(<span class="t-str">"data.json"</span>, <span class="t-str">"w"</span>) <span class="t-tag">as</span> jf:
     json.dump(data, jf, indent=<span class="t-num">2</span>)</pre>
                 </div>
@@ -1562,19 +998,19 @@ student[<span class="t-str">"city"</span>] = <span class="t-str">"Siem Reap"</sp
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 18</span>
+                <span class="page-num">ទំព័រ 16</span>
             </footer>
         </section>
 
-        <!-- 17. OOP Part 1 -->
-        <section class="page" id="chapter-17">
+        <!-- 15. OOP Part 1 -->
+        <section class="page" id="chapter-15">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>17. OOP Part 1: Classes &amp; Objects</span>
+                    <span>15. OOP Part 1: Classes &amp; Objects</span>
                 </header>
 
-                <h2 class="ch-title">17. OOP Part 1: Classes, Objects &amp; __init__</h2>
+                <h2 class="ch-title">15. OOP Part 1: Classes, Objects &amp; __init__</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>OOP (Object-Oriented Programming)</strong>
@@ -1626,19 +1062,19 @@ student[<span class="t-str">"city"</span>] = <span class="t-str">"Siem Reap"</sp
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 19</span>
+                <span class="page-num">ទំព័រ 17</span>
             </footer>
         </section>
 
-        <!-- 18. OOP Part 2 -->
-        <section class="page" id="chapter-18">
+        <!-- 16. OOP Part 2 -->
+        <section class="page" id="chapter-16">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>18. OOP Part 2: Inheritance &amp; Polymorphism</span>
+                    <span>16. OOP Part 2: Inheritance &amp; Polymorphism</span>
                 </header>
 
-                <h2 class="ch-title">18. OOP Part 2: Inheritance &amp; Polymorphism</h2>
+                <h2 class="ch-title">16. OOP Part 2: Inheritance &amp; Polymorphism</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>Inheritance (ការស្នងមរតក)</strong> អនុញ្ញាតឱ្យ Child Class
@@ -1689,19 +1125,19 @@ student[<span class="t-str">"city"</span>] = <span class="t-str">"Siem Reap"</sp
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 20</span>
+                <span class="page-num">ទំព័រ 18</span>
             </footer>
         </section>
 
-        <!-- 19. OOP Part 3 -->
-        <section class="page" id="chapter-19">
+        <!-- 17. OOP Part 3 -->
+        <section class="page" id="chapter-17">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>19. OOP Part 3: Encapsulation &amp; Magic Methods</span>
+                    <span>17. OOP Part 3: Encapsulation &amp; Magic Methods</span>
                 </header>
 
-                <h2 class="ch-title">19. OOP Part 3: Encapsulation &amp; Magic Methods</h2>
+                <h2 class="ch-title">17. OOP Part 3: Encapsulation &amp; Magic Methods</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>Encapsulation</strong> គឺជាការលាក់ និងការពារទិន្នន័យសំខាន់ៗក្នុង Class
@@ -1757,32 +1193,34 @@ acc.deposit(<span class="t-num">50</span>)
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 21</span>
+                <span class="page-num">ទំព័រ 19</span>
             </footer>
         </section>
 
-        <!-- 20. Decorators & Generators -->
-        <section class="page" id="chapter-20">
+        <!-- 18. Decorators & Generators -->
+        <section class="page" id="chapter-18">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>20. Decorators &amp; Generators</span>
+                    <span>18. Decorators &amp; Generators</span>
                 </header>
 
-                <h2 class="ch-title">20. Decorators &amp; Generators (Advanced Python)</h2>
+                <h2 class="ch-title">18. Decorators &amp; Generators (Advanced Python)</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>Decorator (<code class="ic">@decorator</code>)</strong>
                     គឺជាអនុគមន៍ដែលរុំព័ទ្ធអនុគមន៍មួយទៀត ដើម្បីបន្ថែមមុខងារពិសេសដោយមិនបាច់កែកូដខាងក្នុងអនុគមន៍ដើម។ រីឯ
                     <strong>Generator</strong> ប្រើ <code class="ic">yield</code> ដើម្បីបង្កើតទិន្នន័យម្តងមួយៗ សន្សំសំចៃ
-                    Memory។</p>
+                    Memory។
+                </p>
 
                 <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
                 <ul class="step-list">
                     <li><code class="ic">@wrapper_name</code> <strong>(Decorator)៖</strong> ប្រើច្រើនបំផុតក្នុង Web
                         Frameworks ដូចជា FastAPI និង Flask (ឧ. <code class="ic">@app.get("/")</code>)។</li>
                     <li><code class="ic">yield</code> <strong>(Generator)៖</strong> បញ្ជូនតម្លៃម្តងមួយៗពេលត្រូវការ ជំនួស
-                        <code class="ic">return</code>។</li>
+                        <code class="ic">return</code>។
+                    </li>
                 </ul>
 
                 <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
@@ -1822,24 +1260,25 @@ say_hello()</pre>
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 22</span>
+                <span class="page-num">ទំព័រ 20</span>
             </footer>
         </section>
 
-        <!-- 21. APIs & Virtual Environment -->
-        <section class="page" id="chapter-21">
+        <!-- 19. APIs & Virtual Environment -->
+        <section class="page" id="chapter-19">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>21. Working with APIs &amp; Virtual Env</span>
+                    <span>19. Working with APIs &amp; Virtual Env</span>
                 </header>
 
-                <h2 class="ch-title">21. Working with APIs (requests) &amp; Virtual Env</h2>
+                <h2 class="ch-title">19. Working with APIs (requests) &amp; Virtual Env</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>Virtual Environment (<code class="ic">venv</code>)</strong>
                     គឺជាបរិស្ថានដាច់ដោយឡែកសម្រាប់គម្រោងនីមួយៗ ដើម្បីកុំឱ្យ Version របស់ Packages ជាន់គ្នា។ រីឯ Library
-                    <code class="ic">requests</code> ប្រើសម្រាប់ទាញទិន្នន័យជាមួយ REST API។</p>
+                    <code class="ic">requests</code> ប្រើសម្រាប់ទាញទិន្នន័យជាមួយ REST API។
+                </p>
 
                 <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
                 <ul class="step-list">
@@ -1884,19 +1323,19 @@ say_hello()</pre>
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 23</span>
+                <span class="page-num">ទំព័រ 21</span>
             </footer>
         </section>
 
-        <!-- 22. Database Integration -->
-        <section class="page" id="chapter-22">
+        <!-- 20. Database Integration -->
+        <section class="page" id="chapter-20">
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>22. Database Integration (SQLite CRUD)</span>
+                    <span>20. Database Integration (SQLite CRUD)</span>
                 </header>
 
-                <h2 class="ch-title">22. Database Integration (SQLite / MySQL CRUD)</h2>
+                <h2 class="ch-title">20. Database Integration (SQLite / MySQL CRUD)</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text">Python មាន Module <code class="ic">sqlite3</code>
@@ -1952,11 +1391,11 @@ conn.close()</pre>
 
             <footer class="page-foot">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 24</span>
+                <span class="page-num">ទំព័រ 22</span>
             </footer>
         </section>
 
-        <!-- ទំព័រ 25: សន្លឹកចុងក្រោយនៃសៀវភៅ (សូមអរគុណ + Full-Stack Roadmap) -->
+        <!-- ទំព័រ 23: សន្លឹកចុងក្រោយនៃសៀវភៅ (សូមអរគុណ) -->
         <section class="page thankyou-page" id="thank-you">
             <div class="cover-center-box">
                 <span class="cover-badge-pill">ចប់</span>
@@ -1967,7 +1406,7 @@ conn.close()</pre>
                     ការអនុវត្តសរសេរកូដជាប្រចាំ នឹងជួយឱ្យអ្នករីកចម្រើនឥតឈប់ឈរ!
                 </p>
 
-                <!-- ប្រអប់ណែនាំផែនទីបង្ហាញផ្លូវសិក្សាបន្ត (Full-Stack Roadmap) -->
+                <!-- ប្រអប់ណែនាំផែនទីបង្ហាញផ្លូវសិក្សាបន្ត (Learning Roadmap) -->
                 <div
                     style="max-width: 490px; margin: 0 auto 1.5rem; background: rgba(15, 23, 42, 0.55); border: 1px solid rgba(125, 211, 252, 0.3); border-radius: 8px; padding: 14px 18px; text-align: left; font-size: 0.78rem;">
                     <p style="font-weight: 700; color: #38BDF8; margin-bottom: 8px;">🚀 ផែនទីបង្ហាញផ្លូវសិក្សាបន្ត
@@ -1997,7 +1436,7 @@ conn.close()</pre>
 
             <footer class="page-foot" style="width: 100%;">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 25</span>
+                <span class="page-num">ទំព័រ 23</span>
             </footer>
         </section>
 
