@@ -20,6 +20,10 @@
             --bg-app: #CBD5E1;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -624,7 +628,7 @@
                     </a>
                     <a href="#chapter-16" class="toc-row">
                         <div class="toc-left"><span class="toc-num">16.</span><span class="toc-title">File Handling
-                                (TXT, CSV &amp; JSON)</span></div><span class="toc-page">ទំព័រ 18</span>
+                                (Read &amp; Write Files)</span></div><span class="toc-page">ទំព័រ 18</span>
                     </a>
                     <a href="#chapter-17" class="toc-row">
                         <div class="toc-left"><span class="toc-num">17.</span><span class="toc-title">OOP Part 1:
@@ -649,6 +653,10 @@
                     <a href="#chapter-22" class="toc-row">
                         <div class="toc-left"><span class="toc-num">22.</span><span class="toc-title">Database
                                 Integration (SQLite / MySQL CRUD)</span></div><span class="toc-page">ទំព័រ 24</span>
+                    </a>
+                    <a href="#chapter-23" class="toc-row">
+                        <div class="toc-left"><span class="toc-num">23.</span><span class="toc-title">Building Basic
+                                REST API (FastAPI)</span></div><span class="toc-page">ទំព័រ 25</span>
                     </a>
                 </nav>
             </div>
@@ -1630,11 +1638,32 @@ tags.add(<span class="t-str">"api"</span>)
                     Errors) ដើម្បីការពារកុំឱ្យកម្មវិធីគាំង (Crash) ពេលអ្នកប្រើប្រាស់បញ្ចូលទិន្នន័យខុស។</p>
 
                 <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
-                <ul class="step-list">
-                    <li><code class="ic">try:</code> / <code class="ic">except:</code> <strong>៖</strong> សាកល្បងកូដ
-                        និងចាប់យក Error មកដោះស្រាយដោយសុវត្ថិភាព។</li>
-                    <li><code class="ic">finally:</code> <strong>៖</strong> ដំណើរការជានិច្ច មិនថាមាន Error ឬអត់ឡើយ។</li>
+                <ul class="step-list" style="margin-bottom: 4px;">
+                    <li><code class="ic">try:</code> <strong>(ពាក្យគន្លឹះ)៖</strong> ដាក់កូដដែលសង្ស័យថាអាចនឹងមាន Error
+                        កើតឡើងដើម្បីសាកល្បងដំណើរការ។</li>
+                    <li><code class="ic">except:</code> <strong>(ពាក្យគន្លឹះ)៖</strong> ចាប់យក Error
+                        មកដោះស្រាយដោយសុវត្ថិភាព ដើម្បីកុំឱ្យកម្មវិធីគាំង (Crash)។</li>
+                    <li><code class="ic">finally:</code> <strong>(ពាក្យគន្លឹះ)៖</strong> ដំណើរការជានិច្ច មិនថាមាន Error
+                        ឬអត់ឡើយ។</li>
                 </ul>
+
+                <div style="margin-left: 16px;">
+                    <p style="font-size: 0.80rem; font-weight: 600; margin: 2px 0;">ប្រភេទ Error សំខាន់ៗ (Built-in
+                        Exceptions):</p>
+                    <ul class="step-list" style="margin-top: 0;">
+                        <li><code class="ic">ValueError</code> <strong>(ប្រភេទ Error តម្លៃខុស)៖</strong>
+                            កើតឡើងពេលបំប្លែងទិន្នន័យខុសតម្លៃ (ឧ. <code class="ic">int("abc")</code>)។</li>
+                        <li><code class="ic">ZeroDivisionError</code> <strong>(ប្រភេទ Error ចែកនឹងសូន្យ)៖</strong>
+                            កើតឡើងពេលយកលេខទៅចែកនឹង 0 (ឧ. <code class="ic">10 / 0</code>)។</li>
+                        <li><code class="ic">TypeError</code> <strong>(ប្រភេទ Error ខុសប្រភេទទិន្នន័យ)៖</strong>
+                            កើតឡើងពេលប្រើប្រភេទទិន្នន័យខុសគ្នា (ឧ. <code class="ic">"5" + 2</code>)។</li>
+                        <li><code class="ic">FileNotFoundError</code> <strong>(ប្រភេទ Error រកឯកសារមិនឃើញ)៖</strong>
+                            កើតឡើងពេលបើកឯកសារដែលគ្មាន។</li>
+                        <li><code class="ic">Exception</code> <strong>(ប្រភេទ Error ទូទៅ)៖</strong> ចាប់យករាល់ Error
+                            ទាំងអស់
+                            ប្រសិនបើមិនដឹងឈ្មោះ Error ច្បាស់។</li>
+                    </ul>
+                </div>
 
                 <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
                 <div class="code-box">
@@ -1677,29 +1706,55 @@ tags.add(<span class="t-str">"api"</span>)
             <div class="page-body">
                 <header class="page-top-header">
                     <a href="#toc">Python Programming</a>
-                    <span>16. File Handling (TXT &amp; JSON)</span>
+                    <span>16. File Handling (Read &amp; Write Files)</span>
                 </header>
 
-                <h2 class="ch-title">16. File Handling (TXT, CSV &amp; JSON)</h2>
+                <h2 class="ch-title">16. File Handling (Read &amp; Write Files)</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>File Handling</strong> គឺជាការអាន និងសរសេរទិន្នន័យចូលទៅក្នុងឯកសារនៅលើ Hard
                     Disk ដោយប្រើ <code class="ic">open()</code> ជាមួយពាក្យគន្លឹះ <code class="ic">with</code>។</p>
 
                 <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
-                <ul class="step-list">
-                    <li><code class="ic">"r"</code> / <code class="ic">"w"</code> / <code class="ic">"a"</code>
-                        <strong>៖</strong> Modes សម្រាប់អាន សរសេរថ្មី និងសរសេរបន្ថែម។
-                    </li>
-                    <li><code class="ic">with open(...) as f:</code> <strong>៖</strong>
-                        បិទឯកសារដោយស្វ័យប្រវត្តិក្រោយប្រើរួច។</li>
+                <ul class="step-list" style="margin-bottom: 4px;">
+                    <li><code class="ic">open(file, mode)</code> <strong>(អនុគមន៍)៖</strong>
+                        ប្រើសម្រាប់បើកឯកសារដោយកំណត់ទីតាំង និងប្រភេទនៃការប្រើប្រាស់ (Mode)។</li>
+                    <li><code class="ic">with ... as f:</code> <strong>(ពាក្យគន្លឹះ)៖</strong>
+                        បិទឯកសារដោយស្វ័យប្រវត្តិក្រោយប្រើរួច ដើម្បីការពារការខូចទិន្នន័យ។</li>
+                    <li><code class="ic">.read()</code> / <code class="ic">.write()</code> <strong>(Methods)៖</strong>
+                        ប្រើសម្រាប់អានទិន្នន័យចេញ ឬសរសេរទិន្នន័យចូលក្នុងឯកសារ។</li>
                 </ul>
+
+                <div style="margin-left: 16px;">
+                    <p style="font-size: 0.80rem; font-weight: 600; margin: 2px 0;">ប្រភេទ File Modes ទាំង ៧ ក្នុង
+                        Python:</p>
+                    <ul class="step-list" style="margin-top: 0;">
+                        <li><code class="ic">"r"</code> <strong>(Read - អាន)៖</strong> បើកឯកសារដើម្បីអានប៉ុណ្ណោះ
+                            (ជាតម្លៃដើម Default)។</li>
+                        <li><code class="ic">"w"</code> <strong>(Write - សរសេរថ្មី)៖</strong> បង្កើតឯកសារថ្មី
+                            ឬលុបទិន្នន័យចាស់ចោលរួចសរសេរជាន់ពីលើ។</li>
+                        <li><code class="ic">"a"</code> <strong>(Append - សរសេរបន្ថែម)៖</strong>
+                            សរសេរទិន្នន័យបន្ថែមពីខាងចុង ដោយរក្សាទិន្នន័យចាស់ទុកដដែល។</li>
+                        <li><code class="ic">"x"</code> <strong>(Exclusive Creation - បង្កើតថ្មីសុទ្ធ)៖</strong>
+                            បង្កើតឯកសារថ្មី
+                            តែនឹង Error ប្រសិនបើមានឯកសារនោះរួចហើយ។</li>
+                        <li><code class="ic">"t"</code> <strong>(Text Mode - ឯកសារអក្សរ)៖</strong>
+                            បើកជាប្រភេទឯកសារអក្សរទូទៅ (ជាតម្លៃដើម Default)។</li>
+                        <li><code class="ic">"b"</code> <strong>(Binary Mode - ឯកសារទិន្នន័យ)៖</strong>
+                            ប្រើសម្រាប់រូបភាព វីដេអូ ឬ PDF (ឧ. <code class="ic">"rb"</code>, <code
+                                class="ic">"wb"</code>)។</li>
+                        <li><code class="ic">"+"</code> <strong>(Read &amp; Write - អាន និងសរសេរ)៖</strong>
+                            ផ្សំដើម្បីអានផង សរសេរផងក្នុងពេលតែមួយ (ឧ. <code class="ic">"r+"</code>, <code
+                                class="ic">"w+"</code>)។</li>
+                    </ul>
+                </div>
 
                 <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
                 <div class="code-box">
-                    <pre><span class="t-tag">import</span> json
-<span class="t-tag">with</span> <span class="t-tag">open</span>(<span class="t-str">"note.txt"</span>, <span class="t-str">"w"</span>, encoding=<span class="t-str">"utf-8"</span>) <span class="t-tag">as</span> f:
-    f.write(<span class="t-str">"មេរៀន Python ពីមូលដ្ឋានដល់ការអនុវត្ត"</span>)</pre>
+                    <pre><span class="t-tag">with</span> <span class="t-tag">open</span>(<span class="t-str">"note.txt"</span>, <span class="t-str">"w"</span>, encoding=<span class="t-str">"utf-8"</span>) <span class="t-tag">as</span> f: f.write(<span class="t-str">"សួស្តី Python\n"</span>) <span class="t-com"># "w" សរសេរថ្មី</span>
+<span class="t-tag">with</span> <span class="t-tag">open</span>(<span class="t-str">"note.txt"</span>, <span class="t-str">"a"</span>, encoding=<span class="t-str">"utf-8"</span>) <span class="t-tag">as</span> f: f.write(<span class="t-str">"រៀន File Handling"</span>) <span class="t-com"># "a" បន្ថែម</span>
+<span class="t-tag">with</span> <span class="t-tag">open</span>(<span class="t-str">"note.txt"</span>, <span class="t-str">"rt"</span>, encoding=<span class="t-str">"utf-8"</span>) <span class="t-tag">as</span> f: <span class="t-tag">print</span>(f.read()) <span class="t-com"># "r" + "t" អានអក្សរ</span>
+<span class="t-tag">with</span> <span class="t-tag">open</span>(<span class="t-str">"note.txt"</span>, <span class="t-str">"rb"</span>) <span class="t-tag">as</span> f: <span class="t-tag">print</span>(f.read(<span class="t-num">6</span>)) <span class="t-com"># "rb" អានជា Binary (Bytes)</span></pre>
                 </div>
 
                 <p class="step-heading">4. Output (លទ្ធផលនៅលើ Terminal):</p>
@@ -1707,11 +1762,13 @@ tags.add(<span class="t-str">"api"</span>)
                     <div class="browser-header">
                         <div class="browser-dots"><span class="browser-dot dot-red"></span><span
                                 class="browser-dot dot-yellow"></span><span class="browser-dot dot-green"></span></div>
-                        <div class="browser-url-bar">Files Created: note.txt</div>
+                        <div class="browser-url-bar">Terminal: python file_demo.py</div>
                     </div>
                     <div class="browser-canvas"
                         style="background:#0F172A; color:#4ADE80; font-family:monospace; font-size:0.82rem;">
-                        ✓ បានបង្កើត និងរក្សាទុកទិន្នន័យចូល note.txt ដោយជោគជ័យ!
+                        <div>សួស្តី Python</div>
+                        <div>រៀន File Handling</div>
+                        <div style="color:#38BDF8;">b'\xe1\x9e\x9f\xe1\x9e\xbd'</div>
                     </div>
                 </div>
 
@@ -1738,23 +1795,46 @@ tags.add(<span class="t-str">"api"</span>)
                 <h2 class="ch-title">17. OOP Part 1: Classes, Objects &amp; __init__</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
-                <p class="step-text"><strong>OOP</strong> គឺជារបៀបសរសេរកម្មវិធីដោយចងក្រងទិន្នន័យ និងមុខងារចូលគ្នាជា
-                    Object តាមរយៈគំរូដើម <strong>Class</strong>។</p>
+                <p class="step-text"><strong>OOP (Object-Oriented Programming)</strong>
+                    គឺជារបៀបសរសេរកម្មវិធីដោយចងក្រងទិន្នន័យ (Attributes) និងមុខងារ (Methods) ចូលគ្នាជា
+                    <strong>Object</strong> តាមរយៈពុម្ពគំរូដើម <strong>Class</strong>។
+                </p>
 
-                <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
-                <ul class="step-list">
-                    <li><code class="ic">class ClassName:</code> <strong>៖</strong> ពុម្ពគំរូ (PascalCase)។</li>
-                    <li><code class="ic">__init__(self, ...)</code> <strong>៖</strong> Constructor
-                        ដំណើរការស្វ័យប្រវត្តិពេលបង្កើត Object។</li>
+                <p class="step-heading">2. មុខងារ និងធាតុផ្សំសំខាន់ៗ:</p>
+                <ul class="step-list" style="margin-bottom: 4px;">
+                    <li><code class="ic">class ClassName:</code> <strong>(ពុម្ពគំរូ)៖</strong> បង្កើតគំរូដើមសម្រាប់
+                        Object (សរសេរអក្សរធំដើមពាក្យ ឬ PascalCase)។</li>
+                    <li><code class="ic">obj = ClassName()</code> <strong>(Object / Instance)៖</strong>
+                        វត្ថុពិតប្រាកដដែលបង្កើតចេញពី Class។</li>
+                    <li><code class="ic">__init__(self, ...)</code> <strong>(Constructor)៖</strong>
+                        អនុគមន៍ពិសេសដែលដំណើរការស្វ័យប្រវត្តិពេលបង្កើត Object ថ្មី។</li>
+                    <li><code class="ic">self</code> <strong>(Self Parameter)៖</strong> តំណាងឱ្យ Object បច្ចុប្បន្ន
+                        ប្រើសម្រាប់ទាញយកទិន្នន័យ និងមុខងារខាងក្នុង Class។</li>
                 </ul>
+
+                <div style="margin-left: 16px;">
+                    <p style="font-size: 0.80rem; font-weight: 600; margin: 2px 0;">សមាសធាតុខាងក្នុង Class (Class
+                        Members):</p>
+                    <ul class="step-list" style="margin-top: 0;">
+                        <li><strong>Attributes (លក្ខណៈសម្បត្តិ / ទិន្នន័យ)៖</strong> អថេរដែលផ្ទុកព័ត៌មានរបស់ Object (ឧ.
+                            <code class="ic">self.name</code>, <code class="ic">self.age</code>)។
+                        </li>
+                        <li><strong>Methods (មុខងារ / សកម្មភាព)៖</strong> អនុគមន៍ដែលសរសេរនៅក្នុង Class ដើម្បីឱ្យ Object
+                            ធ្វើសកម្មភាពអ្វីមួយ (ឧ. <code class="ic">def say(self):</code>)។</li>
+                    </ul>
+                </div>
 
                 <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
                 <div class="code-box">
                     <pre><span class="t-tag">class</span> <span class="t-attr">Student</span>:
-    <span class="t-tag">def</span> <span class="t-attr">__init__</span>(self, name): self.name = name
-    <span class="t-tag">def</span> <span class="t-attr">say</span>(self): <span class="t-tag">return</span> <span class="t-str">f"សួស្តី {self.name}"</span>
+    <span class="t-tag">def</span> <span class="t-attr">__init__</span>(self, name):
+        self.name = name  <span class="t-com"># Attribute (លក្ខណៈសម្បត្តិ)</span>
 
-<span class="t-tag">print</span>(Student(<span class="t-str">"សុខា"</span>).say())</pre>
+    <span class="t-tag">def</span> <span class="t-attr">say</span>(self):        <span class="t-com"># Method (មុខងារ)</span>
+        <span class="t-tag">return</span> <span class="t-str">f"សួស្តី {self.name}"</span>
+
+stu1 = Student(<span class="t-str">"សុខា"</span>)    <span class="t-com"># បង្កើត Object</span>
+<span class="t-tag">print</span>(stu1.say())</pre>
                 </div>
 
                 <p class="step-heading">4. Output (លទ្ធផលនៅលើ Terminal):</p>
@@ -1771,7 +1851,8 @@ tags.add(<span class="t-str">"api"</span>)
                 </div>
 
                 <div class="summary-box">
-                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> Class គឺជាពុម្ពគំរូ និងគ្រប់ Method ត្រូវមាន <code
+                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> Class គឺជាពុម្ពគំរូដែលផ្ទុក <strong>Attributes</strong>
+                    (ទិន្នន័យ) និង <strong>Methods</strong> (មុខងារ) ហើយគ្រប់ Method ត្រូវមាន <code
                         class="ic">self</code> ជា Parameter ទី ១។
                 </div>
             </div>
@@ -1793,24 +1874,41 @@ tags.add(<span class="t-str">"api"</span>)
                 <h2 class="ch-title">18. OOP Part 2: Inheritance &amp; Polymorphism</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
-                <p class="step-text"><strong>Inheritance</strong> អនុញ្ញាតឱ្យ Child Class ទទួលយកលក្ខណៈសម្បត្តិពី Parent
-                    Class មកប្រើដោយមិនបាច់សរសេរឡើងវិញ។</p>
+                <p class="step-text"><strong>Inheritance (ការស្នងមរតក)</strong> អនុញ្ញាតឱ្យ Child Class ទទួលយក
+                    Attributes និង Methods ពី Parent Class មកប្រើដោយមិនបាច់សរសេរឡើងវិញ។ រីឯ <strong>Polymorphism
+                        (ពហុទម្រង់)</strong> គឺជាសមត្ថភាពដែល Method ឈ្មោះដូចគ្នា អាចដំណើរការខុសគ្នាទៅតាមប្រភេទ Class
+                    នីមួយៗ។</p>
 
-                <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
-                <ul class="step-list">
-                    <li><code class="ic">class Child(Parent):</code> <strong>៖</strong> ស្នងមរតកយក Attributes &amp;
-                        Methods ពី Parent។</li>
-                    <li><strong>Method Overriding៖</strong> កែប្រែ Method ឈ្មោះដូច Parent ក្នុង Child Class។</li>
+                <p class="step-heading">2. មុខងារ និងគោលការណ៍សំខាន់ៗ:</p>
+                <ul class="step-list" style="margin-bottom: 4px;">
+                    <li><code class="ic">class Child(Parent):</code> <strong>(Inheritance)៖</strong> បង្កើត Class
+                        កូនដែលទទួលមរតកពី Class មេ (Parent)។</li>
+                    <li><code class="ic">super()</code> <strong>(Super Function)៖</strong> ហៅប្រើ <code
+                            class="ic">__init__()</code> ឬ Method របស់ Parent Class នៅខាងក្នុង Child Class។</li>
+                    <li><strong>Method Overriding (Polymorphism)៖</strong> សរសេរកែប្រែ Method ដែលមានឈ្មោះដូច Parent
+                        នៅក្នុង Child Class ដើម្បីឱ្យវាធ្វើការខុសគ្នា។</li>
                 </ul>
+
+                <div style="margin-left: 16px;">
+                    <p style="font-size: 0.80rem; font-weight: 600; margin: 2px 0;">តួនាទីសំខាន់ៗក្នុង Inheritance:</p>
+                    <ul class="step-list" style="margin-top: 0;">
+                        <li><strong>Parent Class (Base / Super Class)៖</strong> ជា Class មេដែលផ្ទុកលក្ខណៈសម្បត្តិ
+                            និងមុខងាររួម។</li>
+                        <li><strong>Child Class (Derived / Sub Class)៖</strong> ជា Class កូនដែលស្នងមរតកពី Class មេ
+                            ហើយអាចបន្ថែមមុខងារផ្ទាល់ខ្លួនបាន។</li>
+                    </ul>
+                </div>
 
                 <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
                 <div class="code-box">
-                    <pre><span class="t-tag">class</span> <span class="t-attr">User</span>:
-    <span class="t-tag">def</span> <span class="t-attr">role</span>(self): <span class="t-tag">return</span> <span class="t-str">"User"</span>
-<span class="t-tag">class</span> <span class="t-attr">Admin</span>(User):
-    <span class="t-tag">def</span> <span class="t-attr">role</span>(self): <span class="t-tag">return</span> <span class="t-str">"Admin"</span>
+                    <pre><span class="t-tag">class</span> <span class="t-attr">User</span>:                                  <span class="t-com"># Parent Class</span>
+    <span class="t-tag">def</span> <span class="t-attr">role</span>(self): <span class="t-tag">return</span> <span class="t-str">"General User"</span>
 
-<span class="t-tag">print</span>(Admin().role())</pre>
+<span class="t-tag">class</span> <span class="t-attr">Admin</span>(User):                           <span class="t-com"># Child Class (Inheritance)</span>
+    <span class="t-tag">def</span> <span class="t-attr">role</span>(self): <span class="t-tag">return</span> <span class="t-str">"System Admin"</span>  <span class="t-com"># Method Overriding (Polymorphism)</span>
+
+<span class="t-tag">for</span> account <span class="t-tag">in</span> [User(), Admin()]:
+    <span class="t-tag">print</span>(account.role())</pre>
                 </div>
 
                 <p class="step-heading">4. Output (លទ្ធផលនៅលើ Terminal):</p>
@@ -1822,13 +1920,14 @@ tags.add(<span class="t-str">"api"</span>)
                     </div>
                     <div class="browser-canvas"
                         style="background:#0F172A; color:#4ADE80; font-family:monospace; font-size:0.82rem;">
-                        Admin
+                        <div>General User</div>
+                        <div>System Admin</div>
                     </div>
                 </div>
 
                 <div class="summary-box">
-                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> Inheritance ជួយកាត់បន្ថយកូដស្ទួន
-                    និងងាយស្រួលពង្រីកប្រព័ន្ធ។
+                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> <strong>Inheritance</strong> ជួយកាត់បន្ថយការសរសេរកូដស្ទួន
+                    រីឯ <strong>Polymorphism</strong> ជួយឱ្យកូដមានភាពបត់បែនតាមរយៈ Method Overriding។
                 </div>
             </div>
 
@@ -1849,24 +1948,46 @@ tags.add(<span class="t-str">"api"</span>)
                 <h2 class="ch-title">19. OOP Part 3: Encapsulation &amp; Magic Methods</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
-                <p class="step-text"><strong>Encapsulation</strong> គឺជាការលាក់ និងការពារទិន្នន័យសំខាន់ៗក្នុង Class
-                    កុំឱ្យកែប្រែផ្ទាល់ពីខាងក្រៅដោយប្រើ <code class="ic">__</code>។</p>
+                <p class="step-text"><strong>Encapsulation (ការវេចខ្ចប់ និងការពារទិន្នន័យ)</strong>
+                    គឺជាការលាក់ទិន្នន័យសំខាន់ៗក្នុង Class កុំឱ្យកែប្រែផ្ទាល់ពីខាងក្រៅដោយប្រើ <code class="ic">__</code>។
+                    រីឯ <strong>Magic Methods (Dunder Methods)</strong> គឺជាអនុគមន៍ពិសេសដែលមានសញ្ញា <code
+                        class="ic">__</code> នៅមុខ និងក្រោយ សម្រាប់កំណត់ឥរិយាបថពិសេសឱ្យ Object។</p>
 
-                <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
-                <ul class="step-list">
-                    <li><code class="ic">self.__var</code> <strong>(Private)៖</strong> ការពារមិនឱ្យហៅកែផ្ទាល់ពីក្រៅ
-                        Class។</li>
-                    <li><code class="ic">__str__</code> <strong>៖</strong> កំណត់អត្ថបទបង្ហាញពេលប្រើ <code
-                            class="ic">print(object)</code>។</li>
+                <p class="step-heading">2. មុខងារ និងសមាសធាតុសំខាន់ៗ:</p>
+                <ul class="step-list" style="margin-bottom: 4px;">
+                    <li><strong>Getter &amp; Setter Methods៖</strong> អនុគមន៍សម្រាប់ទាញមើល (Get) ឬកែប្រែ (Set) តម្លៃរបស់
+                        Private Attribute ដោយមានលក្ខខណ្ឌត្រួតពិនិត្យត្រឹមត្រូវ។</li>
+                    <li><code class="ic">__str__(self)</code> <strong>(Magic Method)៖</strong> កំណត់អត្ថបទបង្ហាញពេលប្រើ
+                        <code class="ic">print(object)</code> ជំនួសឱ្យលេខកូដ Memory។
+                    </li>
+                    <li><code class="ic">__len__(self)</code> <strong>(Magic Method)៖</strong> កំណត់តម្លៃប្រវែង
+                        ឬចំនួនពេលប្រើអនុគមន៍ <code class="ic">len(object)</code>។</li>
                 </ul>
+
+                <div style="margin-left: 16px;">
+                    <p style="font-size: 0.80rem; font-weight: 600; margin: 2px 0;">កម្រិតការពារទិន្នន័យក្នុង Python
+                        (Access Modifiers):</p>
+                    <ul class="step-list" style="margin-top: 0;">
+                        <li><code class="ic">self.var</code> <strong>(Public)៖</strong> អាចហៅប្រើ
+                            និងកែប្រែបានដោយសេរីពីគ្រប់ទីកន្លែង។</li>
+                        <li><code class="ic">self._var</code> <strong>(Protected)៖</strong> ប្រើបានតែក្នុង Class ខ្លួនឯង
+                            និង Child Class ប៉ុណ្ណោះ (ជាកិច្ចព្រមព្រៀង)។</li>
+                        <li><code class="ic">self.__var</code> <strong>(Private)៖</strong> ការពារតឹងរ៉ឹង មិនឱ្យហៅប្រើ
+                            ឬកែប្រែផ្ទាល់ពីខាងក្រៅ Class ឡើយ។</li>
+                    </ul>
+                </div>
 
                 <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
                 <div class="code-box">
                     <pre><span class="t-tag">class</span> <span class="t-attr">Account</span>:
-    <span class="t-tag">def</span> <span class="t-attr">__init__</span>(self, bal): self.__bal = bal
-    <span class="t-tag">def</span> <span class="t-attr">__str__</span>(self): <span class="t-tag">return</span> <span class="t-str">f"Balance: ${self.__bal}"</span>
+    <span class="t-tag">def</span> <span class="t-attr">__init__</span>(self, bal):
+        self.__bal = bal                             <span class="t-com"># Private Attribute (Encapsulation)</span>
 
-<span class="t-tag">print</span>(Account(<span class="t-num">500</span>))</pre>
+    <span class="t-tag">def</span> <span class="t-attr">get_bal</span>(self): <span class="t-tag">return</span> self.__bal             <span class="t-com"># Getter Method</span>
+    <span class="t-tag">def</span> <span class="t-attr">__str__</span>(self): <span class="t-tag">return</span> <span class="t-str">f"Balance: ${self.__bal}"</span> <span class="t-com"># Magic Method</span>
+
+acc = Account(<span class="t-num">500</span>)
+<span class="t-tag">print</span>(acc)</pre>
                 </div>
 
                 <p class="step-heading">4. Output (លទ្ធផលនៅលើ Terminal):</p>
@@ -1883,8 +2004,8 @@ tags.add(<span class="t-str">"api"</span>)
                 </div>
 
                 <div class="summary-box">
-                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> ប្រើ <code class="ic">__</code>
-                    ដើម្បីការពារសុវត្ថិភាពទិន្នន័យក្នុង Class។
+                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> ប្រើ <code class="ic">__</code> ជាមួយ Getter/Setter
+                    ដើម្បីការពារសុវត្ថិភាពទិន្នន័យ និងប្រើ <strong>Magic Methods</strong> ដើម្បីគ្រប់គ្រងឥរិយាបថ Object។
                 </div>
             </div>
 
@@ -1906,23 +2027,45 @@ tags.add(<span class="t-str">"api"</span>)
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>Decorator (<code class="ic">@decorator</code>)</strong>
-                    បន្ថែមមុខងារពិសេសឱ្យអនុគមន៍ដទៃ។ រីឯ <strong>Generator</strong> ប្រើ <code class="ic">yield</code>
-                    ដើម្បីសន្សំសំចៃ Memory។</p>
+                    គឺជាបច្ចេកទេសបន្ថែមមុខងារពិសេសឱ្យអនុគមន៍ដទៃដោយមិនបាច់កែកូដដើម។ រីឯ <strong>Generator</strong>
+                    គឺជាអនុគមន៍ដែលប្រើ <code class="ic">yield</code> ដើម្បីបង្កើត និងបញ្ជូនទិន្នន័យម្តងមួយៗ ជួយសន្សំសំចៃ
+                    Memory។</p>
 
-                <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
-                <ul class="step-list">
-                    <li><code class="ic">@wrapper</code> <strong>៖</strong> រុំព័ទ្ធអនុគមន៍ដើម្បីធ្វើ Log ឬ Auth។</li>
-                    <li><code class="ic">yield</code> <strong>៖</strong> បញ្ជូនតម្លៃម្តងមួយៗពេលត្រូវការ។</li>
+                <p class="step-heading">2. មុខងារ និងពាក្យគន្លឹះសំខាន់ៗ:</p>
+                <ul class="step-list" style="margin-bottom: 4px;">
+                    <li><code class="ic">@decorator_name</code> <strong>(Decorator Syntax)៖</strong>
+                        ដាក់ពីលើអនុគមន៍ដើម្បីរុំព័ទ្ធ និងបន្ថែមមុខងារមុន ឬក្រោយពេលអនុគមន៍ដើមដំណើរការ។</li>
+                    <li><code class="ic">yield</code> <strong>(Generator Keyword)៖</strong> ផ្អាកអនុគមន៍បណ្តោះអាសន្ន
+                        និងបញ្ជូនតម្លៃម្តងមួយៗ (ខុសពី <code class="ic">return</code> ដែលបញ្ចប់អនុគមន៍ភ្លាម)។</li>
+                    <li><code class="ic">next(gen)</code> <strong>(Built-in Function)៖</strong>
+                        ប្រើសម្រាប់ទាញយកតម្លៃបន្ទាប់ម្តងមួយៗចេញពី Generator។</li>
                 </ul>
+
+                <div style="margin-left: 16px;">
+                    <p style="font-size: 0.80rem; font-weight: 600; margin: 2px 0;">
+                        អត្ថប្រយោជន៍ជាក់ស្តែងក្នុងការអនុវត្ត:</p>
+                    <ul class="step-list" style="margin-top: 0;">
+                        <li><strong>Decorators៖</strong> និយមប្រើសម្រាប់ពិនិត្យសិទ្ធិអ្នកប្រើប្រាស់ (Authentication),
+                            កត់ត្រាទិន្នន័យ (Logging) និងវាស់ល្បឿនកូដ។</li>
+                        <li><strong>Generators៖</strong> និយមប្រើសម្រាប់ដំណើរការទិន្នន័យធំៗ (Big Data / Large Files)
+                            ដោយមិនធ្វើឱ្យពេញ RAM។</li>
+                    </ul>
+                </div>
 
                 <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
                 <div class="code-box">
-                    <pre><span class="t-tag">def</span> <span class="t-attr">decorator</span>(f):
+                    <pre><span class="t-tag">def</span> <span class="t-attr">decorator</span>(f):                                <span class="t-com"># បង្កើត Decorator</span>
     <span class="t-tag">def</span> <span class="t-attr">wrap</span>(): <span class="t-tag">print</span>(<span class="t-str">"Start"</span>); f()
     <span class="t-tag">return</span> wrap
+
 <span class="t-sel">@decorator</span>
 <span class="t-tag">def</span> <span class="t-attr">say</span>(): <span class="t-tag">print</span>(<span class="t-str">"Python"</span>)
-say()</pre>
+
+<span class="t-tag">def</span> <span class="t-attr">count_gen</span>():                                 <span class="t-com"># បង្កើត Generator</span>
+    <span class="t-tag">yield</span> <span class="t-num">1</span>; <span class="t-tag">yield</span> <span class="t-num">2</span>
+
+say()
+<span class="t-tag">print</span>(<span class="t-tag">list</span>(count_gen()))</pre>
                 </div>
 
                 <p class="step-heading">4. Output (លទ្ធផលនៅលើ Terminal):</p>
@@ -1930,18 +2073,20 @@ say()</pre>
                     <div class="browser-header">
                         <div class="browser-dots"><span class="browser-dot dot-red"></span><span
                                 class="browser-dot dot-yellow"></span><span class="browser-dot dot-green"></span></div>
-                        <div class="browser-url-bar">Terminal: python dec.py</div>
+                        <div class="browser-url-bar">Terminal: python dec_gen.py</div>
                     </div>
                     <div class="browser-canvas"
                         style="background:#0F172A; color:#4ADE80; font-family:monospace; font-size:0.82rem;">
                         <div>Start</div>
                         <div>Python</div>
+                        <div style="color:#38BDF8;">[1, 2]</div>
                     </div>
                 </div>
 
                 <div class="summary-box">
-                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> Decorators និង Generators
-                    ជួយឱ្យកូដកម្រិតខ្ពស់មានប្រសិទ្ធភាពខ្ពស់។
+                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> <strong>Decorators</strong>
+                    ជួយបន្ថែមមុខងារលើអនុគមន៍ដោយមិនកែកូដដើម រីឯ <strong>Generators (<code
+                            class="ic">yield</code>)</strong> ជួយសន្សំសំចៃ Memory ពេលដំណើរការទិន្នន័យច្រើន។
                 </div>
             </div>
 
@@ -1963,21 +2108,43 @@ say()</pre>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
                 <p class="step-text"><strong>Virtual Environment (<code class="ic">venv</code>)</strong>
-                    គឺជាបរិស្ថានដាច់ដោយឡែកសម្រាប់គម្រោង។ រីឯ <code class="ic">requests</code>
-                    ប្រើសម្រាប់ទាញទិន្នន័យជាមួយ REST API។</p>
+                    គឺជាបរិស្ថានដាច់ដោយឡែកសម្រាប់គ្រប់គ្រង Libraries នៃគម្រោងនីមួយៗកុំឱ្យជាន់គ្នា។ រីឯ <strong>API
+                        (<code class="ic">requests</code>)</strong> គឺជាការភ្ជាប់ទំនាក់ទំនងដើម្បីទាញ
+                    ឬបញ្ជូនទិន្នន័យរវាងកម្មវិធី និង Server។</p>
 
-                <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
-                <ul class="step-list">
-                    <li><code class="ic">python -m venv venv</code> <strong>៖</strong> បង្កើត Virtual Environment។</li>
-                    <li><code class="ic">requests.get(url).json()</code> <strong>៖</strong> ទាញ JSON API មកជា
-                        Dictionary។</li>
+                <p class="step-heading">2. មុខងារ និងពាក្យបញ្ជាសំខាន់ៗ:</p>
+                <ul class="step-list" style="margin-bottom: 4px;">
+                    <li><code class="ic">python -m venv venv</code> <strong>(បង្កើត venv)៖</strong> បង្កើត Folder
+                        បរិស្ថានដាច់ដោយឡែកសម្រាប់គម្រោង។</li>
+                    <li><code class="ic">venv\Scripts\activate</code> <strong>(បើកដំណើរការ)៖</strong> បើកប្រើ <code
+                            class="ic">venv</code> លើ Windows (សម្រាប់ Mac/Linux ប្រើ <code
+                            class="ic">source venv/bin/activate</code>)។</li>
+                    <li><code class="ic">pip install requests</code> <strong>(ដំឡើង Library)៖</strong> ដំឡើងកញ្ចប់ <code
+                            class="ic">requests</code> សម្រាប់ធ្វើការជាមួយ REST API។</li>
                 </ul>
+
+                <div style="margin-left: 16px;">
+                    <p style="font-size: 0.80rem; font-weight: 600; margin: 2px 0;">មុខងារ API Requests សំខាន់ៗ:</p>
+                    <ul class="step-list" style="margin-top: 0;">
+                        <li><code class="ic">requests.get(url)</code> <strong>(GET)៖</strong> ទាញយកទិន្នន័យពី Server។
+                        </li>
+                        <li><code class="ic">requests.post(url, json=data)</code> <strong>(POST)៖</strong>
+                            បញ្ជូនទិន្នន័យថ្មីទៅកាន់ Server។</li>
+                        <li><code class="ic">res.status_code</code> &amp; <code class="ic">res.json()</code>
+                            <strong>៖</strong> ពិនិត្យលេខកូដស្ថានភាព (ឧ. <code class="ic">200</code> ជោគជ័យ)
+                            និងបំប្លែងទិន្នន័យ JSON ទៅជា Dictionary។
+                        </li>
+                    </ul>
+                </div>
 
                 <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
                 <div class="code-box">
                     <pre><span class="t-tag">import</span> requests
+
 res = requests.get(<span class="t-str">"https://jsonplaceholder.typicode.com/users/1"</span>)
-<span class="t-tag">print</span>(res.json()[<span class="t-str">"name"</span>])</pre>
+<span class="t-tag">if</span> res.status_code == <span class="t-num">200</span>:
+    data = res.json()
+    <span class="t-tag">print</span>(<span class="t-str">f"Name: {data['name']} ({data['email']})"</span>)</pre>
                 </div>
 
                 <p class="step-heading">4. Output (លទ្ធផលនៅលើ Terminal):</p>
@@ -1985,17 +2152,18 @@ res = requests.get(<span class="t-str">"https://jsonplaceholder.typicode.com/use
                     <div class="browser-header">
                         <div class="browser-dots"><span class="browser-dot dot-red"></span><span
                                 class="browser-dot dot-yellow"></span><span class="browser-dot dot-green"></span></div>
-                        <div class="browser-url-bar">Terminal: python api.py</div>
+                        <div class="browser-url-bar">Terminal: (venv) python api.py</div>
                     </div>
                     <div class="browser-canvas"
                         style="background:#0F172A; color:#4ADE80; font-family:monospace; font-size:0.82rem;">
-                        Leanne Graham
+                        Name: Leanne Graham (Sincere@april.biz)
                     </div>
                 </div>
 
                 <div class="summary-box">
-                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> ត្រូវប្រើ <code class="ic">venv</code>
-                    រាល់ពេលបង្កើតគម្រោង និងពិនិត្យ API Response។
+                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> ត្រូវបង្កើត និងបើក <code class="ic">venv</code>
+                    រាល់ពេលចាប់ផ្តើមគម្រោងថ្មី ហើយពិនិត្យ <code class="ic">status_code == 200</code>
+                    ជានិច្ចមុនទាញយកទិន្នន័យ <code class="ic">.json()</code>។
                 </div>
             </div>
 
@@ -2016,24 +2184,48 @@ res = requests.get(<span class="t-str">"https://jsonplaceholder.typicode.com/use
                 <h2 class="ch-title">22. Database Integration (SQLite / MySQL CRUD)</h2>
 
                 <p class="step-heading">1. Definition (និយមន័យ):</p>
-                <p class="step-text">Python មាន Module <code class="ic">sqlite3</code> សម្រាប់គ្រប់គ្រង Database
-                    និងអនុវត្តប្រតិបត្តិការ <strong>CRUD</strong> ដោយប្រើ SQL។</p>
+                <p class="step-text">Python មាន Module ភ្ជាប់មកជាមួយស្រាប់ឈ្មោះ <code class="ic">sqlite3</code>
+                    សម្រាប់ភ្ជាប់ និងគ្រប់គ្រង Database ដោយអនុវត្តប្រតិបត្តិការ <strong>CRUD</strong> តាមរយៈភាសា SQL។
+                </p>
 
-                <p class="step-heading">2. មុខងារសំខាន់ៗ:</p>
-                <ul class="step-list">
-                    <li><code class="ic">sqlite3.connect()</code> &amp; <code class="ic">conn.commit()</code>
-                        <strong>៖</strong> ភ្ជាប់ និងរក្សាទុកទិន្នន័យក្នុង DB។
+                <p class="step-heading">2. មុខងារ និង Methods សំខាន់ៗ:</p>
+                <ul class="step-list" style="margin-bottom: 4px;">
+                    <li><code class="ic">sqlite3.connect("db")</code> <strong>(ភ្ជាប់ DB)៖</strong> បង្កើត
+                        ឬភ្ជាប់ទៅកាន់ឯកសារ Database ហើយ <code class="ic">conn.cursor()</code> បង្កើតតួបញ្ជា SQL។</li>
+                    <li><code class="ic">cur.execute(sql)</code> &amp; <code class="ic">conn.commit()</code>
+                        <strong>៖</strong> ដំណើរការពាក្យបញ្ជា SQL និងរក្សាទុកការកែប្រែចូលក្នុង Database ជាអចិន្ត្រៃយ៍។
                     </li>
-                    <li><code class="ic">cur.fetchall()</code> <strong>៖</strong> ទាញយកទិន្នន័យទាំងអស់ពី Database។</li>
+                    <li><code class="ic">cur.fetchone()</code> / <code class="ic">cur.fetchall()</code>
+                        <strong>៖</strong> ទាញយកទិន្នន័យ ១ ជួរ ឬទាំងអស់ពី Database រួចបិទដោយប្រើ <code
+                            class="ic">conn.close()</code>។
+                    </li>
                 </ul>
+
+                <div style="margin-left: 16px;">
+                    <p style="font-size: 0.80rem; font-weight: 600; margin: 2px 0;">ប្រតិបត្តិការ CRUD ទាំង ៤ ក្នុង SQL:
+                    </p>
+                    <ul class="step-list" style="margin-top: 0;">
+                        <li><strong>C - Create (បង្កើត/បញ្ចូល)៖</strong> ប្រើ <code class="ic">INSERT INTO</code>
+                            ដើម្បីបញ្ចូលទិន្នន័យថ្មីទៅក្នុង Table។</li>
+                        <li><strong>R - Read (អាន/ទាញយក)៖</strong> ប្រើ <code class="ic">SELECT</code>
+                            ដើម្បីទាញយកទិន្នន័យមកបង្ហាញ។</li>
+                        <li><strong>U - Update (កែប្រែ)៖</strong> ប្រើ <code class="ic">UPDATE ... SET</code>
+                            ដើម្បីកែប្រែទិន្នន័យដែលមានស្រាប់។</li>
+                        <li><strong>D - Delete (លុប)៖</strong> ប្រើ <code class="ic">DELETE FROM</code>
+                            ដើម្បីលុបទិន្នន័យចេញពី Table។</li>
+                    </ul>
+                </div>
 
                 <p class="step-heading">3. Syntax (ទម្រង់កូដ):</p>
                 <div class="code-box">
                     <pre><span class="t-tag">import</span> sqlite3
+
 conn = sqlite3.connect(<span class="t-str">"school.db"</span>); cur = conn.cursor()
 cur.execute(<span class="t-str">"CREATE TABLE IF NOT EXISTS students (id INTEGER PRIMARY KEY, name TEXT)"</span>)
-cur.execute(<span class="t-str">"INSERT INTO students (name) VALUES (?)"</span>, (<span class="t-str">"លាត ប្រុស"</span>,)); conn.commit()
-<span class="t-tag">print</span>(cur.execute(<span class="t-str">"SELECT * FROM students"</span>).fetchall()); conn.close()</pre>
+cur.execute(<span class="t-str">"INSERT INTO students (name) VALUES (?)"</span>, (<span class="t-str">"លាត ប្រុស"</span>,)) <span class="t-com"># Create</span>
+conn.commit()
+<span class="t-tag">print</span>(cur.execute(<span class="t-str">"SELECT * FROM students"</span>).fetchall())               <span class="t-com"># Read</span>
+conn.close()</pre>
                 </div>
 
                 <p class="step-heading">4. Output (លទ្ធផលនៅលើ Terminal):</p>
@@ -2050,8 +2242,9 @@ cur.execute(<span class="t-str">"INSERT INTO students (name) VALUES (?)"</span>,
                 </div>
 
                 <div class="summary-box">
-                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> ហៅ <code class="ic">conn.commit()</code>
-                    រាល់ពេលកែប្រែទិន្នន័យ និងប្រើ Parametrized Query (<code class="ic">?</code>) ដើម្បីសុវត្ថិភាព។
+                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> ត្រូវហៅ <code class="ic">conn.commit()</code>
+                    រាល់ពេលបញ្ចូល កែប្រែ ឬលុបទិន្នន័យ និងប្រើ <code class="ic">?</code> (Parameterized Query)
+                    ដើម្បីការពារ SQL Injection។
                 </div>
             </div>
 
@@ -2061,7 +2254,93 @@ cur.execute(<span class="t-str">"INSERT INTO students (name) VALUES (?)"</span>,
             </footer>
         </section>
 
-        <!-- ទំព័រ 25: សន្លឹកចុងក្រោយនៃសៀវភៅ (សូមអរគុណ + Full-Stack Roadmap) -->
+        <!-- 23. Building Basic REST API -->
+        <section class="page" id="chapter-23">
+            <div class="page-body">
+                <header class="page-top-header">
+                    <a href="#toc">Python Programming</a>
+                    <span>23. Building Basic REST API (FastAPI)</span>
+                </header>
+
+                <h2 class="ch-title">23. Building Basic REST API (FastAPI)</h2>
+
+                <p class="step-heading">1. Definition (និយមន័យ):</p>
+                <p class="step-text"><strong>REST API</strong> គឺជាស្ពានភ្ជាប់ទំនាក់ទំនងសម្រាប់បញ្ជូនទិន្នន័យជាទម្រង់
+                    <strong>JSON</strong> រវាង Backend (Server) និង Frontend (Web/Mobile)។ នៅក្នុង Python គេនិយមប្រើ
+                    <strong>FastAPI</strong> ព្រោះវាមានល្បឿនលឿន និងងាយស្រួលសរសេរ។
+                </p>
+
+                <p class="step-heading">2. មុខងារ និងពាក្យបញ្ជាសំខាន់ៗ:</p>
+                <ul class="step-list" style="margin-bottom: 4px;">
+                    <li><code class="ic">pip install fastapi uvicorn</code> <strong>(ដំឡើង)៖</strong> ដំឡើង Framework
+                        <code class="ic">fastapi</code> និង Server <code class="ic">uvicorn</code> សម្រាប់ដំណើរការ API។
+                    </li>
+                    <li><code class="ic">app = FastAPI()</code> <strong>(បង្កើត App)៖</strong> បង្កើត Object កម្មវិធី
+                        API មេសម្រាប់គ្រប់គ្រង Routes ទាំងអស់។</li>
+                    <li><code class="ic">uvicorn main:app --reload</code> <strong>(បើក Server)៖</strong> ដំណើរការ API
+                        Server នៅលើម៉ាស៊ីនផ្ទាល់ (Localhost)។</li>
+                </ul>
+
+                <div style="margin-left: 16px;">
+                    <p style="font-size: 0.80rem; font-weight: 600; margin: 2px 0;">HTTP Decorators សំខាន់ៗក្នុង
+                        FastAPI:</p>
+                    <ul class="step-list" style="margin-top: 0;">
+                        <li><code class="ic">@app.get("/path")</code> <strong>(GET)៖</strong> បង្កើត Endpoint
+                            សម្រាប់ទាញយកទិន្នន័យ (Read)។</li>
+                        <li><code class="ic">@app.post("/path")</code> <strong>(POST)៖</strong> បង្កើត Endpoint
+                            សម្រាប់ទទួល និងបង្កើតទិន្នន័យថ្មី (Create)។</li>
+                        <li><code class="ic">@app.put("/path")</code> <strong>(PUT)៖</strong> បង្កើត Endpoint
+                            សម្រាប់កែប្រែទិន្នន័យដែលមានស្រាប់ (Update)។</li>
+                        <li><code class="ic">@app.delete("/path")</code> <strong>(DELETE)៖</strong> បង្កើត Endpoint
+                            សម្រាប់លុបទិន្នន័យចេញពីប្រព័ន្ធ (Delete)។</li>
+                    </ul>
+                </div>
+
+                <p class="step-heading">3. Syntax (ទម្រង់កូដ - main.py):</p>
+                <div class="code-box">
+                    <pre><span class="t-tag">from</span> fastapi <span class="t-tag">import</span> FastAPI
+app = FastAPI()
+
+<span class="t-sel">@app.get</span>(<span class="t-str">"/items"</span>)
+<span class="t-tag">def</span> <span class="t-attr">read_items</span>(): <span class="t-tag">return</span> {<span class="t-str">"msg"</span>: <span class="t-str">"ទាញទិន្នន័យ (GET)"</span>}
+
+<span class="t-sel">@app.post</span>(<span class="t-str">"/items"</span>)
+<span class="t-tag">def</span> <span class="t-attr">create_item</span>(): <span class="t-tag">return</span> {<span class="t-str">"msg"</span>: <span class="t-str">"បង្កើតថ្មី (POST)"</span>}
+
+<span class="t-sel">@app.put</span>(<span class="t-str">"/items/{id}"</span>)
+<span class="t-tag">def</span> <span class="t-attr">update_item</span>(id: <span class="t-tag">int</span>): <span class="t-tag">return</span> {<span class="t-str">"msg"</span>: <span class="t-str">f"កែប្រែ ID {id} (PUT)"</span>}
+
+<span class="t-sel">@app.delete</span>(<span class="t-str">"/items/{id}"</span>)
+<span class="t-tag">def</span> <span class="t-attr">delete_item</span>(id: <span class="t-tag">int</span>): <span class="t-tag">return</span> {<span class="t-str">"msg"</span>: <span class="t-str">f"លុប ID {id} (DELETE)"</span>}</pre>
+                </div>
+
+                <p class="step-heading">4. Output (លទ្ធផលនៅលើ Browser / API Response):</p>
+                <div class="browser-window">
+                    <div class="browser-header">
+                        <div class="browser-dots"><span class="browser-dot dot-red"></span><span
+                                class="browser-dot dot-yellow"></span><span class="browser-dot dot-green"></span></div>
+                        <div class="browser-url-bar">PUT http://127.0.0.1:8000/items/1</div>
+                    </div>
+                    <div class="browser-canvas"
+                        style="background:#0F172A; color:#4ADE80; font-family:monospace; font-size:0.82rem;">
+                        {"msg": "កែប្រែ ID 1 (PUT)"}
+                    </div>
+                </div>
+
+                <div class="summary-box">
+                    <strong>5. Summary (សង្ខេបមេរៀន)៖</strong> <strong>FastAPI</strong> បំប្លែង Python Dictionary ទៅជា
+                    <strong>JSON</strong> ដោយស្វ័យប្រវត្តិ និងមានទំព័រតេស្ត API ស្រាប់តាមរយៈ <code
+                        class="ic">/docs</code>។
+                </div>
+            </div>
+
+            <footer class="page-foot">
+                <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
+                <span class="page-num">ទំព័រ 25</span>
+            </footer>
+        </section>
+
+        <!-- ទំព័រ 26: សន្លឹកចុងក្រោយនៃសៀវភៅ (សូមអរគុណ + Full-Stack Roadmap) -->
         <section class="page thankyou-page" id="thank-you">
             <div class="cover-center-box">
                 <span class="cover-badge-pill">ចប់</span>
@@ -2089,7 +2368,7 @@ cur.execute(<span class="t-str">"INSERT INTO students (name) VALUES (?)"</span>,
 
                     <p style="margin: 5px 0; color: #F1F5F9;"><strong>៤. Python Backend (FastAPI / Django) &amp;
                             Database៖</strong>
-                        យកចំណេះដឹង Python នេះទៅបង្កើត API និងតភ្ជាប់ជាមួយ MySQL / SQL Server ដើម្បីក្លាយជា Full-Stack
+                        ពង្រីកចំណេះដឹង REST API និងតភ្ជាប់ជាមួយ MySQL / SQL Server ដើម្បីក្លាយជា Full-Stack
                         Developer ពេញលេញ។</p>
                 </div>
 
@@ -2102,7 +2381,7 @@ cur.execute(<span class="t-str">"INSERT INTO students (name) VALUES (?)"</span>,
 
             <footer class="page-foot" style="width: 100%;">
                 <span class="author-credit">រៀបចំដោយ៖ លាត ប្រុស</span>
-                <span class="page-num">ទំព័រ 25</span>
+                <span class="page-num">ទំព័រ 26</span>
             </footer>
         </section>
 
